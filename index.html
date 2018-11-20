@@ -46,7 +46,7 @@ A {
 	font-weight : bold;
 	color : inherit;
 }
-A:HOVER, DIV.tegels DIV:HOVER { 
+A:HOVER { 
 	color : #EF790C;
 }
 OL { 
@@ -66,7 +66,7 @@ LI {
 }
 .knipper {
 	transition : background-color 1s;
-	background-color : #ffe699 !important;
+	background-color : #ffe699;
 }	
 
 /* STIJLEN VOOR SPELREGELS =================================== */
@@ -218,11 +218,14 @@ DIV.tegels DIV A {
 	text-decoration : none;
 	font-weight : normal;
 }
-/* !important is nodig omdat als een tegel een stijl meekrijgt (voor het 
-   veranderen van de tegel-kleur) onderstaande anders geen effect meer zou
-   hebben, ook niet als op dit niveau geen hover kleur wordt ingesteld */
-DIV.tegels DIV:HOVER {
-	background-color : #99EEFF !important;
+/* Het *-teken is nodig omdat als een tegel een class meekrijgt voor het 
+   veranderen van de tegel-kleur, desbetreffende class onderstaande zou overrulen
+   omdat eerstgenoemde class (voor tegelkleurverandering) meer specifiek is */
+DIV.tegels DIV:HOVER * {
+	background-color : #EF790C;
+}
+DIV.tegels DIV A:HOVER {
+	color : white;
 }
 /* stijl die de tegel aan het begin van een nieuwe regel plaatst */
 DIV.tegels DIV.index-onderwerp {
@@ -234,7 +237,7 @@ TABLE.spelregeltabel TD.rood {
 	background-color : #FFAAAA;
 }
 TABLE.spelregeltabel TD.geel, DIV.tegels DIV.index-link-hoofd  {
-	background-color : #ffecb3;
+	background-color : #fff2cc;
 }
 TABLE.spelregeltabel TD.groen {
 	background-color : #AAFFAA;
@@ -1152,8 +1155,8 @@ KNHB: persoonlijke straffen voor teambegeleiders.
 	
 <div class="index-onderwerp"><a href="#12.3">straf&shy;corner</a></div>
 <div class="index-link-hoofd"><a href="#13.3">nemen</a></div>
-<div class="index-link-hoofd"><a href="#13.7">straffen bij nemen</a></div>
-<div><a href="#strafcornertabel">straffen hulptabel</a></div>
+<div class="index-link-hoofd"><a href="#13.7">over&shy;treding bij nemen</a></div>
+<div><a href="#strafcornertabel">over&shy;treding hulptabel</a></div>
 <div><a href="#13.3k">hoog op doel</a></div>
 <div><a href="#2.3strafcorner">niet wisselen</a></div>
 <div><a href="#13.6">wel wisselen</a></div>
@@ -1165,7 +1168,7 @@ KNHB: persoonlijke straffen voor teambegeleiders.
 
 <div class="index-onderwerp"><a href="#12.4">straf&shy;bal</a></div>
 <div class="index-link-hoofd"><a href="#13.8">nemen</a></div>
-<div class="index-link-hoofd"><a href="#13.10">straffen bij nemen</a></div>
+<div class="index-link-hoofd"><a href="#13.10">over&shy;treding bij nemen</a></div>
 <div><a href="#9.14">stick wisselen</a></div>
 <div><a href="#13.9">einde</a></div>
 <div><a href="#6.6">hervatten</a></div>
