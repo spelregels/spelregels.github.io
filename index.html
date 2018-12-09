@@ -64,6 +64,9 @@ UL {
 LI { 
 	padding-top : 5px;
 }
+SPAN.nadruk, #begrippenlijst SPAN {
+	font-weight : bold;
+}
 .knipper {
 	transition : background-color 1s;
 	background-color : #ffe699;
@@ -99,9 +102,6 @@ TABLE.spelregels TD {
 	font-size : 90%;
 	padding-top : 5px;
 	color : #777777;
-}
-TABLE.spelregels SPAN {
-	font-weight : bold;
 }
 DIV.per2018 {
 	margin-left : -10px;
@@ -483,7 +483,7 @@ Elk team mag wisselen met de spelers die niet in het veld staan.
 </li><li>Als de duur van een verwijdering is verstreken mag de betrokken speler worden gewisseld zonder dat hij in het speelveld terug is geweest.
 </li><li>Spelers die wisselen, moeten het veld verlaten dan wel betreden binnen 3 meter van de middenlijn aan de zijde van het veld waar de teambanken staan of die vooraf is overeengekomen met de scheidsrechters.
 </li><li id="2.3g">De wedstrijdtijd wordt niet stilgezet bij wissels.
-<div class="opmerking">De tijd wordt niet stilgezet indien een doelverdediger deel uitmaakt van een wissel. Indien bij een voorgenomen wissel de vervangende doelverdediger nog geen volledige, beschermende uitrusting draagt, wordt de tijd niet stilgezet om deze uitrusting aan te laten trekken. De wedstrijd dient hiervoor niet opgehouden te worden en moet indien noodzakelijk voortgezet worden met een veldspeler met de rechten van een doelverdediger.</div>
+<div id="2.3gdoelverdediger" class="opmerking">De tijd wordt niet stilgezet indien een doelverdediger deel uitmaakt van een wissel. Indien bij een voorgenomen wissel de vervangende doelverdediger nog geen volledige, beschermende uitrusting draagt, wordt de tijd niet stilgezet om deze uitrusting aan te laten trekken. De wedstrijd dient hiervoor niet opgehouden te worden en moet indien noodzakelijk voortgezet worden met een veldspeler met de rechten van een doelverdediger.</div>
 </li></ol>
 </td></tr>
 
@@ -556,7 +556,7 @@ Spelers mogen niets dragen dat gevaarlijk kan zijn voor andere spelers.
 <div class="opmerking">Het is veldspelers toegestaan beschermende handschoenen te dragen, mits deze de natuurlijke grootte van de hand niet aanmerkelijk vergroten. Handschoenen die worden gebruikt tijdens het normale spel en/of tijdens het verdedigen van de strafcorner mogen een maximale afmeting hebben van lengte 290 mm x breedte 180 mm x hoogte 110 mm.</div>
 <div class="opmerking">Veldspelers en doelverdedigers die zonder beenbeschermers (legguards) spelen dienen scheen- en enkelbeschermers te gebruiken; veldspelers dienen een mondbeschermer te gebruiken.</div>
 <div class="opmerking">KNHB: spelers kunnen uitsluitend om medische redenen ontheffing aanvragen bij de KNHB. Spelers dienen op verzoek van de scheidsrechters de schriftelijke ontheffing van de KNHB te tonen.</div>
-<div class="opmerking" id="4.2strafcorner">Het is veldspelers toegestaan om bij het verdedigen van een strafcorner een glad masker te dragen dat transparant, wit, of enkel van kleur is en dat aansluit bij de vormen van het gezicht, <span>zolang de strafcorner duurt en zolang de verdediger zich in zijn eigen cirkel bevindt</span>.</div>
+<div class="opmerking" id="4.2strafcorner">Het is veldspelers toegestaan om bij het verdedigen van een strafcorner een glad masker te dragen dat transparant, wit, of enkel van kleur is en dat aansluit bij de vormen van het gezicht, <span class="nadruk">zolang de strafcorner duurt en zolang de verdediger zich in zijn eigen cirkel bevindt</span>.</div>
 <div class="opmerking">Het is veldspelers toegestaan om tijdens het verdedigen van een strafcorner kniebescherming te dragen, mits deze onder de sokken wordt gedragen of dezelfde kleur heeft als de sokken.</div>
 <div class="opmerking">KNHB-experiment: het is veldspelers toegestaan om, alleen om medische redenen die door de KNHB zijn goedgekeurd, een glad en bij voorkeur transparant, wit of egaal donker masker te dragen dat aansluit op de vormen van het gezicht, of zachte hoofdbescherming of oogbescherming in de vorm van een beschermende bril (met zacht materiaal over het frame). Spelers dienen op verzoek van de scheids- rechters de schriftelijke toestemming van de KNHB voor het dragen van dit masker te tonen.</div>
 <div class="opmerking">Het is veldspelers niet toegestaan om in andere omstandigheden hoofdbescherming (masker, helm of andere bescherming) te dragen.</div>
@@ -923,7 +923,7 @@ Een <a href="#13.3">strafcorner</a> wordt toegekend:
 </li><li id="12.3c">voor een opzettelijke overtreding van een verdediger op zijn eigen helft, maar buiten de cirkel;
 </li><li>voor het opzettelijk over de achterlijn spelen van de bal door een verdediger;
 Doelverdedigers en veldspelers met rechten van een doelverdediger mogen de bal van hun stick, hun beschermende uitrusting of enig deel van hun lichaam in iedere gewenste richting laten afkaatsen, ook over de achterlijn.
-</li><li>tegen het team dat verkeerd gewisseld heeft;
+</li><li id="12.3e">tegen het team dat verkeerd gewisseld heeft;
 </li><li>wanneer de bal in de cirkel komt vast te zitten in de kleding of uitrusting van een (doel)verdediger.
 </li></ol>
 </td></tr>
@@ -963,7 +963,7 @@ Bepalingen voor het nemen van een vrije push, beginpush en voor hervatting van h
 <div class="opmerking">Indien een speler binnen 3 meter afstand van de bal is, maar het spel niet beïnvloedt, behoeft het nemen van de vrije push niet te worden opgehouden.</div>
 </li><li>Bij een vrije push voor het aanvallende team op de speelhelft waar dat team aanvalt, moeten alle spelers, behalve de speler die de vrije push neemt, op ten minste 3 meter afstand van de bal zijn.
 </li><li id="13.2d">De bal moet worden <a href="#push">gepusht</a>.
-</li><li id="13.2e">Een vrije push voor het aanvallende team op de speelhelft waar dat team aanvalt mag niet de cirkel in worden gespeeld, voordat de bal minimaal drie meter is verplaatst of is geraakt door een speler van de verdedigende partij. <a id="vrijepushbalk"></a>De bal mag ook <span>via de balk</span> de cirkel in worden gespeeld, mits de bal eerst drie meter heeft gerold voordat de balk wordt geraakt.
+</li><li id="13.2e">Een vrije push voor het aanvallende team op de speelhelft waar dat team aanvalt mag niet de cirkel in worden gespeeld, voordat de bal minimaal drie meter is verplaatst of is geraakt door een speler van de verdedigende partij. <span id="vrijepushbalk">De bal mag ook <span class="nadruk">via de balk</span> de cirkel in worden gespeeld, mits de bal eerst drie meter heeft gerold voordat de balk wordt geraakt.</span>
 <div class="opmerking">Als de speler die de vrije push neemt ook degene is die verder speelt (speler van de verdedigende partij heeft de bal nog niet geraakt):
 <ul><li>mag deze speler de bal zo vaak raken als hij wil, maar
 </li><li>de bal moet minimaal drie meter verplaatst worden, voordat
@@ -1172,10 +1172,15 @@ naar de tribune gaan en mag zijn team niet coachen gedurende de straftijd.
 <div><a href="#10.6">liggend spelen keeper</a></div>
 <div><a href="#9.19">bal klemmen</a></div>
 <div><a href="#5.2">time-out</a></div>
+<div><a href="#9.9">omhoog spelen</a></div>
+<div><a href="#vrijepushbalk">vrije push via balk</a></div>
+<div><a href="#12.3e">verkeerde wissel</a></div>
+<div><a href="#2.3gdoelverdediger">wissel doel&shy;verdediger</a></div>
+<div><span>in blok spelen</span></div>
 
 <div class="index-onderwerp"><a href="#12.2">vrije push</a></div>
 <div class="index-link-hoofd"><a href="#13.2">nemen</a></div>
-<div class="index-link-hoofd"><a href="#vrijepushbalk">via balk</a></div>
+<div><a href="#vrijepushbalk">via balk</a></div>
 
 <div class="index-onderwerp"><a href="#12.3">straf&shy;corner</a></div>
 <div class="index-link-hoofd"><a href="#13.3">nemen</a></div>
