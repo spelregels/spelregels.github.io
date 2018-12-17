@@ -275,12 +275,18 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Tijdelijke verandering van achtergrondkleur
+// Alleen indien target niet het grootste deel van het scherm vult
+// Hoe kleiner de target, hoe langer deze gehighlight moet worden
 function knipper(x) {
+	var elems = document.querySelectorAll(".knipper");
+	[].forEach.call(elems, function(el) {
+		el.classList.remove("knipper");
+	});
 	if ((x.scrollHeight < window.innerHeight * 0.70) && (x.id != 'inhoud')) {
 		x.classList.add('knipper');
 		setTimeout(function() {
 			x.classList.remove('knipper');
-		}, 2000);
+		}, (0.85 - x.scrollHeight/window.innerHeight) * 15000);
 	}
 }
 
@@ -290,23 +296,36 @@ function navigatie(el) {
 	if(el.tagName=='A') var doel = el.href.match(/#(.+)/);
 	
 	if (doel != null) {
-		// Verwijzing naar target element ophalen obv id
-		var x = document.getElementById(doel[1]);
+		// Verwijzing naar doelelement ophalen obv id
+		var doel = document.getElementById(doel[1]);
+
+		// In alle gevallen is het doelelement het element dat gehighlight moet worden.
+		// Afwijkend scrollen (hoger) is soms nodig om de juiste context van het doelelement
+		// in beeld te krijgen.
+		
+		// Als het doelelement het custom attribute 'data-scrolltoid' heeft, dan geeft
+		// dat de id van het element waarnaar gescrolld moet worden.
+		// Ontbreekt zo'n custom attribute, dan moet gewoon naar het doelelement gescrolld worden.
+		
+		var scrollnaar = doel.getAttribute('data-scrolltoid');
+		if (scrollnaar != null) { scrollnaar = document.getElementById(scrollnaar); }
+		if (scrollnaar == null) { scrollnaar = doel; }
+		
 		history.pushState('','');
-		// Scrollen naar het target element
-		x.scrollIntoView();
-		// Controleren of target element in de spelregels staat
-		var y = x.closest(".spelregels");
-		// Zo ja dan de target onder de sticky tabelheader vandaan
-		// scrollen (behalve als het doelelement de tabel zelf is)
-		if ((y != null) && (y != x)) { 
+		// Scrollen naar juiste scrollbestemming, zie toelichting hierboven.
+		scrollnaar.scrollIntoView();
+		// Controleren of scrollbestemming in de spelregels staat
+		var y = scrollnaar.closest(".spelregels");
+		// Zo ja dan het scrollbestemming onder de sticky tabelheader vandaan
+		// scrollen, behalve als de scrollbestemming de tabel zelf is (dan gaat het al goed).
+		if ((y != null) && (y != scrollnaar)) { 
 			var z = y.tHead.clientHeight; 
 			window.scrollBy(0, -z);
 			}
 		
-		// Target even highlighten om duidelijker te maken dat dit 
+		// Doelelement highlighten om duidelijker te maken dat dit 
 		// de tekst is waarnaar gesprongen is.
-		knipper(x);
+		knipper(doel);
 	}
 }
 
@@ -483,7 +502,7 @@ Elk team mag wisselen met de spelers die niet in het veld staan.
 </li><li>Als de duur van een verwijdering is verstreken mag de betrokken speler worden gewisseld zonder dat hij in het speelveld terug is geweest.
 </li><li>Spelers die wisselen, moeten het veld verlaten dan wel betreden binnen 3 meter van de middenlijn aan de zijde van het veld waar de teambanken staan of die vooraf is overeengekomen met de scheidsrechters.
 </li><li id="2.3g">De wedstrijdtijd wordt niet stilgezet bij wissels.
-<div id="2.3gdoelverdediger" class="opmerking">De tijd wordt niet stilgezet indien een doelverdediger deel uitmaakt van een wissel. Indien bij een voorgenomen wissel de vervangende doelverdediger nog geen volledige, beschermende uitrusting draagt, wordt de tijd niet stilgezet om deze uitrusting aan te laten trekken. De wedstrijd dient hiervoor niet opgehouden te worden en moet indien noodzakelijk voortgezet worden met een veldspeler met de rechten van een doelverdediger.</div>
+<div id="2.3gdoelverdediger" data-scrolltoid="2.3g" class="opmerking">De tijd wordt niet stilgezet indien een doelverdediger deel uitmaakt van een wissel.</div> Indien bij een voorgenomen wissel de vervangende doelverdediger nog geen volledige, beschermende uitrusting draagt, wordt de tijd niet stilgezet om deze uitrusting aan te laten trekken. De wedstrijd dient hiervoor niet opgehouden te worden en moet indien noodzakelijk voortgezet worden met een veldspeler met de rechten van een doelverdediger.
 </li></ol>
 </td></tr>
 
@@ -795,7 +814,7 @@ Spelers mogen niet opzettelijk in het doel dat hun tegenstanders verdedigen kome
 Spelers mogen hun stick niet ruilen tussen toekennen en voltooien van een strafcorner of een strafbal, tenzij deze stick niet meer aan de specificaties voldoet.
 </td></tr>
 
-<tr><th>9.17</th><td>
+<tr id="9.17"><th>9.17</th><td>
 Spelers mogen geen voorwerpen of uitrustingsstukken op het veld, naar de bal of naar een speler, scheidsrechter of andere persoon gooien.
 <div class="opmerking" id="9.17strafcorner">Indien na een strafcorner de bal weggegooide uitrustingsstukken raakt zoals een handschoen, kniebeschermer of masker wordt een <a href="#13.2">vrije push</a> gegeven indien dit buiten de cirkel gebeurt en een <a href="#13.3">strafcorner</a> wanneer dit binnen de cirkel gebeurt.</div>
 </td></tr>
@@ -923,7 +942,7 @@ Een <a href="#13.3">strafcorner</a> wordt toegekend:
 </li><li id="12.3c">voor een opzettelijke overtreding van een verdediger op zijn eigen helft, maar buiten de cirkel;
 </li><li>voor het opzettelijk over de achterlijn spelen van de bal door een verdediger;
 Doelverdedigers en veldspelers met rechten van een doelverdediger mogen de bal van hun stick, hun beschermende uitrusting of enig deel van hun lichaam in iedere gewenste richting laten afkaatsen, ook over de achterlijn.
-</li><li id="12.3e">tegen het team dat verkeerd gewisseld heeft;
+</li><li id="12.3e" data-scrolltoid="12.3">tegen het team dat verkeerd gewisseld heeft;
 </li><li>wanneer de bal in de cirkel komt vast te zitten in de kleding of uitrusting van een (doel)verdediger.
 </li></ol>
 </td></tr>
@@ -963,7 +982,8 @@ Bepalingen voor het nemen van een vrije push, beginpush en voor hervatting van h
 <div class="opmerking">Indien een speler binnen 3 meter afstand van de bal is, maar het spel niet beïnvloedt, behoeft het nemen van de vrije push niet te worden opgehouden.</div>
 </li><li>Bij een vrije push voor het aanvallende team op de speelhelft waar dat team aanvalt, moeten alle spelers, behalve de speler die de vrije push neemt, op ten minste 3 meter afstand van de bal zijn.
 </li><li id="13.2d">De bal moet worden <a href="#push">gepusht</a>.
-</li><li id="13.2e">Een vrije push voor het aanvallende team op de speelhelft waar dat team aanvalt mag niet de cirkel in worden gespeeld, voordat de bal minimaal drie meter is verplaatst of is geraakt door een speler van de verdedigende partij. <span id="vrijepushbalk">De bal mag ook <span class="nadruk">via de balk</span> de cirkel in worden gespeeld, mits de bal eerst drie meter heeft gerold voordat de balk wordt geraakt.</span>
+</li><li id="13.2e">Een vrije push voor het aanvallende team op de speelhelft waar dat team aanvalt mag niet de cirkel in worden gespeeld, voordat de bal minimaal drie meter is verplaatst of is geraakt door een speler van de verdedigende partij.
+<span id="vrijepushbalk" data-scrolltoid="13.2e">De bal mag ook <span class="nadruk">via de balk</span> de cirkel in worden gespeeld, mits de bal eerst drie meter heeft gerold voordat de balk wordt geraakt.</span>
 <div class="opmerking">Als de speler die de vrije push neemt ook degene is die verder speelt (speler van de verdedigende partij heeft de bal nog niet geraakt):
 <ul><li>mag deze speler de bal zo vaak raken als hij wil, maar
 </li><li>de bal moet minimaal drie meter verplaatst worden, voordat
