@@ -69,7 +69,7 @@ SPAN.nadruk, #begrippenlijst SPAN {
 }
 .knipper {
 	transition : background-color 1s;
-	background-color : #ffe699;
+	background-color : #fff099;
 }	
 
 /* STIJLEN VOOR SPELREGELS =================================== */
@@ -275,56 +275,97 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Tijdelijke verandering van achtergrondkleur
-// Alleen indien target niet het grootste deel van het scherm vult
-// Hoe kleiner de target, hoe langer deze gehighlight moet worden
+var knipperTimer;
 function knipper(x) {
+	// Eventuele actieve markering en timeout daarvan uitzetten.
+	clearTimeout(knipperTimer);
 	var elems = document.querySelectorAll(".knipper");
 	[].forEach.call(elems, function(el) {
 		el.classList.remove("knipper");
 	});
+	// Alleen markeren indien target niet het grootste deel van het scherm vult.
+	// Hoe kleiner de target, hoe langer deze gehighlight moet worden
 	if ((x.scrollHeight < window.innerHeight * 0.70) && (x.id != 'inhoud')) {
 		x.classList.add('knipper');
-		setTimeout(function() {
+		knipperTimer = setTimeout(function() {
 			x.classList.remove('knipper');
 		}, (0.85 - x.scrollHeight/window.innerHeight) * 15000);
 	}
 }
 
+// Absolute positie element op pagina bepalen
+function topOf(el) {
+	// Dit levert de positie van het element binnen een e.v.t. bovenliggend element.
+	var top = el.offsetTop;
+	// Positie van bovenliggend element t.o.v. rest erbij optellen (recursief).
+	while(el.offsetParent) {
+		el = el.offsetParent;
+		top += el.offsetTop;
+	}
+	return(top);
+}
+
 // Navigatie naar target van anchor, met de anchor als parameter.
 function navigatie(el) { 
-	// Ophalen van de id van de target van de anchor
+	// Ophalen van de id van de target van de anchor.
 	if(el.tagName=='A') var doel = el.href.match(/#(.+)/);
 	
 	if (doel != null) {
-		// Verwijzing naar doelelement ophalen obv id
+		// Verwijzing naar doelelement ophalen obv id.
 		var doel = document.getElementById(doel[1]);
+		
+		// In principe scrollen naar doelelement.
+		var scrollnaar = doel;
 
-		// In alle gevallen is het doelelement het element dat gehighlight moet worden.
-		// Afwijkend scrollen (hoger) is soms nodig om de juiste context van het doelelement
-		// in beeld te krijgen.
-		
-		// Als het doelelement het custom attribute 'data-scrolltoid' heeft, dan geeft
-		// dat de id van het element waarnaar gescrolld moet worden.
-		// Ontbreekt zo'n custom attribute, dan moet gewoon naar het doelelement gescrolld worden.
-		
-		var scrollnaar = doel.getAttribute('data-scrolltoid');
-		if (scrollnaar != null) { scrollnaar = document.getElementById(scrollnaar); }
-		if (scrollnaar == null) { scrollnaar = doel; }
-		
+		// Controleren of het doelelement in een spelregeltabel staat.
+		var y = doel.closest(".spelregels");
+		var headerHoogte = 0;
+
+		// Indien doelement ligt in spelregeltabel.
+		if (y != null) { 
+			// Hoogte van de header bepalen, die is nodig voor correctie op het scrollen.
+			var headerHoogte = y.tHead.clientHeight; 
+
+			// Zoeken bovenliggende tabelrij = bovenliggend artikel.
+			var artikel = doel.closest("tr");
+
+			// Zoeken bovenliggend lijstitem uit geordende lijst = lid binnen artikel.
+			var artikellid = doel.closest("ol li");
+
+			// Indien bovenliggend artikel gevonden.
+			if (artikel != null) {
+				// Indien het doelelement zichtbaar blijft bij scrollen naar artikel, dan daar naartoe scrollen.
+				// Uitgevoerde controle: als afstand vanaf bovenkant artikel tot onderkant doelelement
+				// groter is dan de hoogte van het browserscherm minus header en 70 extra pixels (ivm menu),
+				// dan komt het doelelement dus niet meer helemaal in beeld.
+				if (topOf(doel) + doel.offsetHeight - topOf(artikel) <= window.innerHeight - headerHoogte - 70) {
+					scrollnaar = artikel;
+				}
+				// Als scrollen naar artikel niet mogelijk is omdat doelelement buiten beeld raakt, dan...
+				else if (artikellid != null) {
+					// ...op dezelfde manier controleren of het doelelement wel in beeld blijft bij scrollen naar 
+					// artikellid. Zo ja, dan hiernaar scrollen.
+					if (topOf(doel) + doel.offsetHeight - topOf(artikellid) <= window.innerHeight - headerHoogte - 70) {
+						scrollnaar = artikellid;
+					}
+				}
+			}
+		}
+
+		// Mogelijk maken om met back knop van de browser terug te bladeren.
 		history.pushState('','');
 		// Scrollen naar juiste scrollbestemming, zie toelichting hierboven.
 		scrollnaar.scrollIntoView();
-		// Controleren of scrollbestemming in de spelregels staat
-		var y = scrollnaar.closest(".spelregels");
-		// Zo ja dan het scrollbestemming onder de sticky tabelheader vandaan
-		// scrollen, behalve als de scrollbestemming de tabel zelf is (dan gaat het al goed).
-		if ((y != null) && (y != scrollnaar)) { 
-			var z = y.tHead.clientHeight; 
-			window.scrollBy(0, -z);
-			}
+
+		// Indien de bestemming in tabel met sticky header staat, dan moet de scrollpositie gecorrigeerd worden;
+		// de standaard scrollfunctie plaatst het doelelement helemaal bovenaan de pagina en zet de sticky header eroverheen.
+		// Als de bestemming (het begin van) de tabel zelf is dan hoeft de scrollpositie niet gecorrigeerd
+		// te worden, dit gaat wel goed.
+		if ((headerHoogte > 0) && (y != scrollnaar)) {
+			window.scrollBy(0, -headerHoogte);
+		}
 		
-		// Doelelement highlighten om duidelijker te maken dat dit 
-		// de tekst is waarnaar gesprongen is.
+		// Doelelement highlighten om duidelijker te maken dat dit de tekst is waarnaar gesprongen is.
 		knipper(doel);
 	}
 }
@@ -502,7 +543,7 @@ Elk team mag wisselen met de spelers die niet in het veld staan.
 </li><li>Als de duur van een verwijdering is verstreken mag de betrokken speler worden gewisseld zonder dat hij in het speelveld terug is geweest.
 </li><li>Spelers die wisselen, moeten het veld verlaten dan wel betreden binnen 3 meter van de middenlijn aan de zijde van het veld waar de teambanken staan of die vooraf is overeengekomen met de scheidsrechters.
 </li><li id="2.3g">De wedstrijdtijd wordt niet stilgezet bij wissels.
-<div id="2.3gdoelverdediger" data-scrolltoid="2.3g" class="opmerking">De tijd wordt niet stilgezet indien een doelverdediger deel uitmaakt van een wissel.</div> Indien bij een voorgenomen wissel de vervangende doelverdediger nog geen volledige, beschermende uitrusting draagt, wordt de tijd niet stilgezet om deze uitrusting aan te laten trekken. De wedstrijd dient hiervoor niet opgehouden te worden en moet indien noodzakelijk voortgezet worden met een veldspeler met de rechten van een doelverdediger.
+<div id="2.3gdoelverdediger" class="opmerking">De tijd wordt niet stilgezet indien een doelverdediger deel uitmaakt van een wissel.</div> Indien bij een voorgenomen wissel de vervangende doelverdediger nog geen volledige, beschermende uitrusting draagt, wordt de tijd niet stilgezet om deze uitrusting aan te laten trekken. De wedstrijd dient hiervoor niet opgehouden te worden en moet indien noodzakelijk voortgezet worden met een veldspeler met de rechten van een doelverdediger.
 </li></ol>
 </td></tr>
 
@@ -570,7 +611,7 @@ Veldspelers van een team moeten een uniform tenue dragen.
 <div class="opmerking">KNHB: spelers uitkomende in wedstrijden in de standaardklassen, de interdistrictcompetities en de hoogste competitieklassen A/B-jeugd, dienen een duidelijk rugnummer te dragen. In een team mag niet tweemaal hetzelfde rugnummer worden gebruikt.</div>
 </td></tr>
 
-<tr><th>4.2</th><td>
+<tr id="4.2"><th>4.2</th><td>
 Spelers mogen niets dragen dat gevaarlijk kan zijn voor andere spelers.
 <div class="opmerking">Het is veldspelers toegestaan beschermende handschoenen te dragen, mits deze de natuurlijke grootte van de hand niet aanmerkelijk vergroten. Handschoenen die worden gebruikt tijdens het normale spel en/of tijdens het verdedigen van de strafcorner mogen een maximale afmeting hebben van lengte 290 mm x breedte 180 mm x hoogte 110 mm.</div>
 <div class="opmerking">Veldspelers en doelverdedigers die zonder beenbeschermers (legguards) spelen dienen scheen- en enkelbeschermers te gebruiken; veldspelers dienen een mondbeschermer te gebruiken.</div>
@@ -940,9 +981,9 @@ Een <a href="#13.3">strafcorner</a> wordt toegekend:
 <ol><li id="12.3a">voor een overtreding van een verdediger in zijn cirkel, waarbij niet het scoren van een doelpunt wordt voorkomen;
 </li><li id="12.3b">voor een opzettelijke overtreding van een verdediger in zijn cirkel tegen een tegenstander die geen balbezit heeft, noch een mogelijkheid heeft de bal te spelen;
 </li><li id="12.3c">voor een opzettelijke overtreding van een verdediger op zijn eigen helft, maar buiten de cirkel;
-</li><li>voor het opzettelijk over de achterlijn spelen van de bal door een verdediger;
+</li><li>voor het opzettelijk over de achterlijn spelen van de bal door een verdediger;<br />
 Doelverdedigers en veldspelers met rechten van een doelverdediger mogen de bal van hun stick, hun beschermende uitrusting of enig deel van hun lichaam in iedere gewenste richting laten afkaatsen, ook over de achterlijn.
-</li><li id="12.3e" data-scrolltoid="12.3">tegen het team dat verkeerd gewisseld heeft;
+</li><li id="12.3e">tegen het team dat verkeerd gewisseld heeft;
 </li><li>wanneer de bal in de cirkel komt vast te zitten in de kleding of uitrusting van een (doel)verdediger.
 </li></ol>
 </td></tr>
@@ -965,7 +1006,7 @@ Als er sprake is van een nieuwe overtreding of van wangedrag nog voor een opgele
 <table id="13" class="spelregels">
 <thead><tr><th>13</th><th>Uitvoering van straffen</th></tr></thead>
 
-<tr><th>13.1</th><td>
+<tr id="13.1"><th>13.1</th><td>
 Plaats van de vrije push.
 <ol><li>Een vrije push wordt genomen nabij de plaats waar de overtreding gebeurde.
 <div class="opmerking">‘Nabij’ betekent binnen speelafstand van de plaats van de overtreding en zonder daar een aanzienlijk voordeel uit te verkrijgen. De plaats waar een vrije push moet worden genomen moet dicht bij de cirkel wat strenger worden beoordeeld.</div>
@@ -983,7 +1024,7 @@ Bepalingen voor het nemen van een vrije push, beginpush en voor hervatting van h
 </li><li>Bij een vrije push voor het aanvallende team op de speelhelft waar dat team aanvalt, moeten alle spelers, behalve de speler die de vrije push neemt, op ten minste 3 meter afstand van de bal zijn.
 </li><li id="13.2d">De bal moet worden <a href="#push">gepusht</a>.
 </li><li id="13.2e">Een vrije push voor het aanvallende team op de speelhelft waar dat team aanvalt mag niet de cirkel in worden gespeeld, voordat de bal minimaal drie meter is verplaatst of is geraakt door een speler van de verdedigende partij.
-<span id="vrijepushbalk" data-scrolltoid="13.2e">De bal mag ook <span class="nadruk">via de balk</span> de cirkel in worden gespeeld, mits de bal eerst drie meter heeft gerold voordat de balk wordt geraakt.</span>
+<span id="vrijepushbalk">De bal mag ook <span class="nadruk">via de balk</span> de cirkel in worden gespeeld, mits de bal eerst drie meter heeft gerold voordat de balk wordt geraakt.</span>
 <div class="opmerking">Als de speler die de vrije push neemt ook degene is die verder speelt (speler van de verdedigende partij heeft de bal nog niet geraakt):
 <ul><li>mag deze speler de bal zo vaak raken als hij wil, maar
 </li><li>de bal moet minimaal drie meter verplaatst worden, voordat
@@ -1050,7 +1091,7 @@ strafcorner:
 <div class="opmerking">Indien een verdediger bij deze of elke opnieuw genomen strafcorner te vroeg over de achterlijn komt, dient deze verdediger ook achter de middenlijn plaats te nemen en mag niet worden vervangen.</div>
 <div class="opmerking">Een strafcorner wordt beschouwd als opnieuw genomen totdat aan een voorwaarde van regel <a href="#13.5">13.5</a> en <a href="13.6">13.6</a> is voldaan.</div>
 <div class="opmerking">Een nieuw toegekende strafcorner, in tegenstelling tot een opnieuw genomen strafcorner, mag weer met maximaal 6 verdedigers (inclusief doelverdediger of veldspeler met de rechten van een doelverdediger) worden verdedigd.</div>
-<div class="opmerking"><a id="13.7c2"></a>Een verdediger komt over de middenlijn voordat de strafcorner is genomen : de <a href="#13.3">strafcorner</a> wordt opnieuw genomen.</div>
+<div class="opmerking" id="13.7c2">Een verdediger komt over de middenlijn voordat de strafcorner is genomen : de <a href="#13.3">strafcorner</a> wordt opnieuw genomen.</div>
 </li><li id="13.7d">Een <a href="#doelverdediger">doelverdediger</a> of <a href="#veldspelerdoelverdediger">veldspeler met rechten van een doelverdediger</a> komt over de achterlijn voordat de strafcorner is genomen : de verdedigende partij verdedigt de strafcorner met een speler minder. De <a href="#13.3">strafcorner</a> wordt opnieuw genomen.
 <div class="opmerking">Het verdedigende team wijst een veldspeler aan die achter de middenlijn plaatsneemt. Deze verdediger mag niet worden vervangen.</div>
 <div class="opmerking">Indien een doelverdediger of veldspeler met rechten van een doelverdediger bij deze of elke opnieuw genomen strafcorner te vroeg over de achterlijn komt: het verdedigende team wijst een volgende veldspeler aan om achter de middenlijn plaats te nemen. De speler mag niet worden vervangen.</div>
@@ -1200,6 +1241,7 @@ naar de tribune gaan en mag zijn team niet coachen gedurende de straftijd.
 
 <div class="index-onderwerp"><a href="#12.2">vrije push</a></div>
 <div class="index-link-hoofd"><a href="#13.2">nemen</a></div>
+<div><a href="#13.1">plaats</a></div>
 <div><a href="#vrijepushbalk">via balk</a></div>
 
 <div class="index-onderwerp"><a href="#12.3">straf&shy;corner</a></div>
@@ -1268,10 +1310,6 @@ naar de tribune gaan en mag zijn team niet coachen gedurende de straftijd.
 </td><td>
 </td></tr>
 
-<tr><td>rest
-</td><td colspan="3" class="groen"><a href="#12.2a">vrije slag</a>
-</td><td>
-</td></tr>
 </table>
 
 <div class="rand"></div>
