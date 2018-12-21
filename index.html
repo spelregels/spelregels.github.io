@@ -271,7 +271,6 @@ document.addEventListener('DOMContentLoaded', function() {
 	for (i = 0; i < x.length; ++i) {
 		x[i].onclick = function() {navigatie(this); return false;};
 	}
-
 });
 
 // Tijdelijke verandering van achtergrondkleur
@@ -417,16 +416,31 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 <script>
-// script om op kleine schermen de tekst in het menu te verkorten
+// script voor aanpassingen op kleine schermen (aanname dat dat mobiele telefoons zijn
 document.addEventListener('DOMContentLoaded', function() {
 	var x = document.getElementById('menu').scrollWidth;
 
+	// als menu breder dan scherm, dan tekst in menu inkorten
 	if (screen.width <= x) {
 		document.getElementById('menu-inhoud').innerHTML = '↑';
 		document.getElementById('menu-inhoud').style.paddingTop = '0px';
 		document.getElementById('menu-inhoud').style.paddingBottom = '0px';
 		document.getElementById('menu-termen').innerHTML = '?';
 		document.getElementById('menu-termen').style.fontWeight = 'normal';
+	}
+	
+	// op klein scherm alle HOVER effecten uitzetten; op een mobiele telefoon zijn deze ongewenste zichtbaar
+	// als na het volgen van een link er met back van de browser teruggekeerd wordt.
+	if (screen.width <= 600) {
+		var stylesheet = document.styleSheets[0];
+		for(var i = 0; i < stylesheet.cssRules.length; i++) {
+			var rule = stylesheet.cssRules[i];
+			var selector = rule.selectorText;
+			if (selector.match(":hover") != null)	{
+				stylesheet.deleteRule(i);
+				i--;
+			}
+		}
 	}
 });
 </script>
