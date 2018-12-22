@@ -78,7 +78,7 @@ LI {
 	color : rgb(70,70,70);
 }
 .knipper.opmerking SPAN.nadruk {
-	color : rgb(140,140,140);
+	color : rgb(130,130,130);
 }
 
 /* STIJLEN VOOR SPELREGELS =================================== */
@@ -294,11 +294,11 @@ function knipper(x) {
 	// Alleen markeren indien target niet het grootste deel van het scherm vult.
 	// Bij beschikbare ruimte wordt er een vaste waarde afgetrokken ivm header en menu.
 	// Hoe kleiner de target, hoe langer deze gehighlight moet worden.
-	if ((x.scrollHeight < (window.innerHeight - 100) * 0.85) && (x.id != 'inhoud')) {
+	if ((x.scrollHeight < (window.innerHeight - 100) * 0.85) && (x.id != 'inhoud') && (x.id != 'index')) {
 		x.classList.add('knipper');
 		knipperTimer = setTimeout(function() {
 			x.classList.remove('knipper');
-		}, (0.85 - x.scrollHeight/(window.innerHeight - 100)) * 15000);
+		}, 1000 + (0.85 - x.scrollHeight/(window.innerHeight - 100)) * 14000);
 	}
 }
 
