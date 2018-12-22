@@ -64,16 +64,21 @@ UL {
 LI { 
 	padding-top : 5px;
 }
-.knipper SPAN.nadruk, #begrippenlijst SPAN {
-	font-weight : bold;
-	color : rgb(80,80,80);
-}
-.knipper.opmerking SPAN.nadruk {
-	color : rgb(150,150,150);
-}
+
+/* STIJLEN VOOR HIGHLIGHT VAN TEKST WAARNAAR VIA LINK NAAR GESPRONGEN WORDT */
+
 .knipper {
 	transition : background-color 1s;
 	background-color : #fff099;
+}
+/* benadrukte tekst (.nadruk) wordt hierbij dikgedrukt gemaakt, waarbij de 
+   tekstkleur iets lichter gemaakt wordt om de nadruk niet te sterk te maken */	
+.knipper SPAN.nadruk, #begrippenlijst SPAN {
+	font-weight : bold;
+	color : rgb(70,70,70);
+}
+.knipper.opmerking SPAN.nadruk {
+	color : rgb(140,140,140);
 }
 
 /* STIJLEN VOOR SPELREGELS =================================== */
@@ -287,12 +292,13 @@ function knipper(x) {
 		el.classList.remove("knipper");
 	});
 	// Alleen markeren indien target niet het grootste deel van het scherm vult.
-	// Hoe kleiner de target, hoe langer deze gehighlight moet worden
-	if ((x.scrollHeight < window.innerHeight * 0.70) && (x.id != 'inhoud')) {
+	// Bij beschikbare ruimte wordt er een vaste waarde afgetrokken ivm header en menu.
+	// Hoe kleiner de target, hoe langer deze gehighlight moet worden.
+	if ((x.scrollHeight < (window.innerHeight - 100) * 0.85) && (x.id != 'inhoud')) {
 		x.classList.add('knipper');
 		knipperTimer = setTimeout(function() {
 			x.classList.remove('knipper');
-		}, (0.85 - x.scrollHeight/window.innerHeight) * 15000);
+		}, (0.85 - x.scrollHeight/(window.innerHeight - 100)) * 15000);
 	}
 }
 
@@ -1065,7 +1071,7 @@ Bepalingen voor het nemen van een strafcorner:
 </li><li>De aanvaller die de strafcorner neemt, moet minstens één voet buiten het speelveld aan de grond hebben.
 </li><li>De overige aanvallers moeten binnen het speelveld maar buiten de cirkel zijn, zonder met stick, voeten of handen de grond binnen de cirkel aan te raken.
 </li><li>Geen andere speler dan de speler die de strafcorner neemt mag op minder dan 3 meter afstand van de bal zijn op het moment dat de bal gepusht wordt.
-</li><li>De doelverdediger of de veldspeler met de rechten van een doelverdediger van de verdedigende partij moet in het doel staan, <span id="13.3fopstelling">maximaal 5 andere veldspelers van dat team mogen achter hun achterlijn zijn aan de andere kant van het doel dan waar de strafcorner wordt genomen</span>, zonder met hun stick, handen of voeten de grond binnen het speelveld aan te raken.
+</li><li id="13.3f">De doelverdediger of de veldspeler met de rechten van een doelverdediger van de verdedigende partij moet in het doel staan, <span class="nadruk">maximaal 5 andere veldspelers van dat team mogen achter hun achterlijn zijn aan de andere kant van het doel dan waar de strafcorner wordt genomen</span>, zonder met hun stick, handen of voeten de grond binnen het speelveld aan te raken.
 </li><li>Elke verdediger die ervoor kiest niet achter de achterlijn te gaan staan moet achter de middenlijn staan.
 </li><li>Tot de bal bij de strafcorner is gespeeld, mag geen andere aanvaller dan degene die de strafcorner neemt, in de cirkel komen en mag geen enkele verdediger over de achterlijn komen.
 </li><li>Na het nemen van de strafcorner mag de aanvaller die de strafcorner heeft genomen de bal niet meer aanraken of binnen speelafstand benaderen, totdat deze door een andere speler is gespeeld.
@@ -1253,7 +1259,7 @@ naar de tribune gaan en mag zijn team niet coachen gedurende de straftijd.
 <div><a href="#9.8inblokspelen">in blok spelen</a></div>
 <div><a href="#9.19">bal klemmen</a></div>
 <div><a href="#12.3e">verkeerde wissel</a></div>
-<div><a href="#13.3fopstelling">op&shy;stelling strafcorner</a></div>
+<div><a href="#13.3f">op&shy;stelling strafcorner</a></div>
 <div><a href="#9.12">liggend spelen</a></div>
 <div><a href="#10.6">liggend spelen keeper</a></div>
 <div><a href="#5.2">time-out</a></div>
