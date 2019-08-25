@@ -74,16 +74,20 @@ LI {
 	transition : background-color 1s;
 	background-color : #fff099;
 }
-/* Benadrukte tekst (.nadruk) wordt hierbij dikgedrukt gemaakt, waarbij de 
+/* Tekst met nadruk-stijl (.nadruk) wordt gewoonlijk niet benadrukt, maar tijdens 
+   het highlighten van de tekst wel. De tekst wordt dan dikgedrukt gemaakt, waarbij de 
    tekstkleur iets lichter gemaakt wordt om de nadruk niet te sterk te maken.
-   Nadruk alleen toepassen op een SPAN als die direct descendant van een 
-   gehighlight element is. Of een SPAN direct in een tabelrij met highlight.
-   Zodat nadruk niet gegeven wordt mn als een heel hoofdstuk gehighlight wordt. */
-.knipper > SPAN.nadruk, TR.knipper TD > SPAN.nadruk, #begrippenlijst SPAN {
+   Nadruk alleen toepassen op een SPAN:
+	- die direct descendant van een gehighlight element is
+	- direct in een tabelrij met highlight
+	- op enige plek onder een gehighlight listitem (hoeft niet *direct* onderonder te zijn)
+   Zodat nadruk niet gegeven wordt m.n. als een geheel hoofdstuk gehighlight wordt.
+*/
+.knipper > SPAN.nadruk, TR.knipper TD > SPAN.nadruk, LI.knipper SPAN.nadruk, #begrippenlijst SPAN {
 	font-weight : bold;
 	color : rgb(60,60,60);
 }
-.knipper.opmerking SPAN.nadruk {
+.knipper.opmerking SPAN.nadruk, .opmerking .knipper SPAN.nadruk {
 	color : rgb(130,130,130);
 }
 
@@ -130,6 +134,14 @@ DIV.per2019 {
 	margin-left : -10px;
 	padding-left : 5px;
 	border-left : 5px solid black;
+}
+LI DIV.per2019 {
+	margin-left : -5px;
+	padding-left : 2px;
+	border-left : 3px solid black;
+}
+SPAN.per2019 {
+	border-bottom : dotted 1px rgb(90,90,90);
 }
 
 /* STIJLEN VOOR HET MENU ONDERIN DE PAGINA =================================== */
@@ -457,7 +469,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	var x = document.getElementById('menu').scrollWidth;
 
 	// als menu breder dan scherm, dan tekst in menu inkorten
-	if (screen.width <= x) {
+	if (screen.width < x) {
 		document.getElementById('menu-inhoud').innerHTML = '↑';
 		document.getElementById('menu-inhoud').style.paddingTop = '0px';
 		document.getElementById('menu-inhoud').style.paddingBottom = '0px';
@@ -575,7 +587,7 @@ KNHB: aan een team mogen in bondswedstrijden ten hoogste vier teambegeleiders (c
 <tr><th>2.2</th><td>
 <div class="per2019">
 Elk team moet tijdens de wedstrijd steeds een <a href="#doelverdediger">doelverdediger</a> in het speelveld hebben, of spelen met 11 veldspelers.
-</div><div class="opmerking">
+<div class="opmerking">
 Verplicht experiment vanaf 1 augustus 2019: het team heeft niet langer
 de optie om met een <a href="#veldspelerdoelverdediger">speler met de rechten van een doelverdediger</a> te
 spelen.
@@ -597,7 +609,7 @@ de eisen zoals benoemd in dit reglement.
 </div><div class="opmerking">
 Elke wijziging tussen deze 2 opties moet worden uitgevoerd als een
 wissel.
-</div>
+</div></div>
 </td></tr>
 
 <tr id="wisselen"><th>2.3</th><td>
@@ -703,7 +715,7 @@ beschermende bril (met zacht materiaal over het frame) te
 dragen; de medische redenen moeten worden beoordeeld door
 een bevoegde instantie en de betrokken speler moet de mogelijke
 consequenties van het spelen met een medische conditie begrijpen;
-</li><li id="4.2strafcorner"><div class="per2019">is toegestaan om bij het verdedigen van een strafcorner een glad masker in een transparante, of enkele kleur, of gezichtsmasker met metalen grill te dragen dat aansluit bij de vormen van het gezicht <span class="nadruk">zolang de strafcorner of strafbal duurt duurt, inclusief het gelijk nemen van de vrije slag als die wordt toegekend na een strafcorner waarbij de bal wordt gespeeld naar een andere speler (geen selfpass)</span>; het dragen van een gezichtsmasker tijdens het verdedigen van een strafcorner is primair bedoeld om de veiligheid te waarborgen; het dragen van gezichtsmaskers die in overeenstemming zijn met de onderliggende gedachte van deze richtlijn moet worden toegestaan;</div>
+</li><li id="4.2strafcorner"><div class="per2019">is toegestaan om bij het verdedigen van een strafcorner een glad masker in een transparante, of enkele kleur, of gezichtsmasker met metalen grill te dragen dat aansluit bij de vormen van het gezicht <span class="nadruk">zolang de strafcorner of strafbal duurt duurt, <span class="per2019">inclusief het gelijk nemen van de vrije slag als die wordt toegekend na een strafcorner waarbij de bal wordt gespeeld naar een andere speler (geen selfpass)</span></span>; het dragen van een gezichtsmasker tijdens het verdedigen van een strafcorner is primair bedoeld om de veiligheid te waarborgen; het dragen van gezichtsmaskers die in overeenstemming zijn met de onderliggende gedachte van deze richtlijn moet worden toegestaan;</div>
 </li><li>is niet toegestaan om zich met een masker op zodanig te gedragen dat het intimiderend is of gevaar oplevert voor tegenstanders;
 </li><li>KNHB-experiment: het is veldspelers toegestaan om, alleen om medische redenen die door de KNHB zijn goedgekeurd, een glad masker te dragen dat aansluit op de vormen van het gezicht, of zachte hoofdbescherming of oogbescherming in de vorm van een beschermende bril (met zacht materiaal over het frame). Spelers dienen op verzoek van de scheidsrechters de schriftelijke toestemming van de KNHB voor het dragen van dit masker te tonen.
 </li><li>is niet toegestaan om in andere omstandigheden hoofdbescherming (gezichtsmasker of andere beschermende hoofdbedekking) te dragen.
@@ -713,7 +725,8 @@ consequenties van het spelen met een medische conditie begrijpen;
 
 <tr><th>4.3</th><td>
 Doelverdedigers moeten een shirt of kledingstuk dragen dat in kleur duidelijk afwijkt van beide teams.
-<div class="opmerking per2019">Doelverdedigers moeten dit shirt of kledingstuk over de bescherming van hun bovenlichaam dragen. Elleboogbescherming hoeft niet bedekt te worden door het shirt of kledingstuk.</div>
+<div class="opmerking per2019">Doelverdedigers moeten dit shirt of kledingstuk over de bescherming van hun bovenlichaam dragen. 
+<span class="per2019">Elleboogbescherming hoeft niet bedekt te worden door het shirt of kledingstuk.</span></div>
 </td></tr>
 
 <tr><th>4.4</th><td>
@@ -777,21 +790,19 @@ Voor aanvang van de wedstrijd wordt getost.
 </td></tr>
 
 <tr><th>6.2</th><td>
-<div class="per2019">
 De richting waarin teams spelen wordt omgekeerd in het derde kwart van de wedstrijd.
-</div>
 </td></tr>
 
 <tr id="6.3"><th>6.3</th><td>
 Een beginslag wordt genomen:
-<div class="per2019">
 <ol>
-<li>Om de wedstrijd en het tweede kwart te laten beginnen door een speler van het team dat de toss heeft gewonnen en voor deze optie heeft gekozen; anders door een speler van de tegenpartij.
-</li><li>Om het spel na de rust en bij het vierde kwart opnieuw te beginnen door een speler van het team dat niet de beginslag heeft genomen waarmee de wedstrijd is begonnen.
+<li><div class="per2019">
+Om de wedstrijd en het tweede kwart te laten beginnen door een speler van het team dat de toss heeft gewonnen en voor deze optie heeft gekozen; anders door een speler van de tegenpartij.</div>
+</li><li><div class="per2019">
+Om het spel na de rust en bij het vierde kwart opnieuw te beginnen door een speler van het team dat niet de beginslag heeft genomen waarmee de wedstrijd is begonnen.</div>
 </li>
 <li>Na een doelpunt door een speler van het team tegen wie het doelpunt is gescoord.
 </li></ol>
-</div>
 </td></tr>
 
 <tr id="beginslag"><th>6.4</th><td>
@@ -1112,10 +1123,10 @@ binnenkant van de cirkel met de speler die de selfpass neemt,
 op voorwaarde dat ze de bal niet spelen, proberen te spelen
 of het spel proberen te beïnvloeden, totdat de bal vijf meter is
 verplaatst of als alternatief is aangeraakt door een verdediger
-die de bal volgens de regels mag spelen. Als de aanvaller ervoor
+die de bal volgens de regels mag spelen. <span class="per2019">Als de aanvaller ervoor
 kiest om de vrije slag niet direct te nemen, moeten alle spelers op
 minstens vijf meter van de bal staan, voordat de vrije slag wordt
-genomen.</div>
+genomen.</span></div>
 <div class="opmerking per2016">In alle andere gevallen dan hierboven beschreven geldt dat ook elke poging om de bal te spelen, daadwerkelijk de bal spelen, of op een andere wijze het spel beïnvloeden door een verdediger of aanvaller die binnen vijf meter afstand van de bal stond bestraft zal moeten worden.</div>
 <div class="opmerking">Een aanvaller mag de bal hoog over de cirkel van de tegenstander heen spelen zodat deze buiten de cirkel op de grond komt, op voorwaarde dat hierdoor geen gevaarlijk spel ontstaat en dat de bal in of boven de cirkel niet op reglementaire wijze door een ander speler gespeeld kan worden.</div>
 </li></ol>
@@ -1129,6 +1140,9 @@ Bepalingen voor het nemen van een strafcorner:
 </li><li>De overige aanvallers moeten binnen het speelveld maar buiten de cirkel zijn, zonder met stick, voeten of handen de grond binnen de cirkel aan te raken.
 </li><li>Geen andere speler dan de speler die de strafcorner neemt mag op minder dan 5 meter afstand van de bal zijn op het moment dat de bal gepusht of geslagen wordt.
 </li><li>Ten hoogste vijf verdedigers, waaronder de doelverdediger, moeten achter hun achterlijn zijn, zonder met hun stick, handen of voeten de grond binnen het veld aan te raken.
+<div class="opmerking">Als het team dat de strafcorner verdedigt ervoor heeft gekozen om
+met alleen veldspelers te spelen, heeft niemand van de verdedigers
+zoals hierboven benoemd rechten van een doelverdediger</div>
 </li><li>De overige spelers van de verdedigende partij moeten aan de andere kant van de middenlijn zijn.
 </li><li>Tot de bal bij de strafcorner is gespeeld, mag geen andere aanvaller dan diegene die de strafcorner neemt, in de cirkel komen en mag geen enkele verdediger over de achterlijn of middenlijn komen.
 </li><li>Na het nemen van de strafcorner mag de aanvaller die de strafcorner heeft genomen de bal niet meer aanraken of binnen speelafstand benaderen, totdat deze door een andere speler is gespeeld.
@@ -1176,7 +1190,7 @@ Straffen voor een overtreding tijdens het nemen van een strafcorner:
 <div class="opmerking">Als de actie om te vroeg over de achterlijn te komen wordt herhaald gedurende dezelfde strafcorner: het verdedigende team is verplicht een volgende veldspeler aan te wijzen om achter de middenlijn plaats te nemen en deze mogen niet vervangen worden.</div>
 <div class="opmerking">Een strafcorner wordt beschouwd als opnieuw genomen totdat aan een voorwaarde van regel <a href="#13.5">13.5</a> voor de voltooiing ervan is voldaan.</div>
 <div class="opmerking">Een nieuw toegekende strafcorner, in tegenstelling tot een opnieuw genomen strafcorner, mag weer met maximaal vijf verdedigers worden verdedigd.</div>
-</li><li id="13.6e">Een aanvaller komt in de cirkel voordat dit is toegestaan: de aanvaller moet aan de andere kant van de middenlijn plaatsnemen. De <a href="#13.3">strafcorner</a> wordt opnieuw genomen.
+</li><li id="13.6e"><div class="per2019">Een aanvaller komt in de cirkel voordat dit is toegestaan: de aanvaller <span class="per2019">die de strafcorner neemt vanaf de achterlijn</span> moet aan de andere kant van de middenlijn plaatsnemen. De <a href="#13.3">strafcorner</a> wordt opnieuw genomen.</div>
 <div class="opmerking">Aanvallers die achter de middenlijn zijn gestuurd mogen niet terugkeren voor opnieuw genomen strafcorners, maar wel voor een nieuw gegeven strafcorner.</div>
 </li><li id="13.6f">Voor een andere overtreding door de aanvallende partij: een <a href="#13.2">vrije slag</a> wordt toegekend aan het verdedigende team.
 </li></ol>
