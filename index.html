@@ -26,13 +26,14 @@ THEAD {
 	border-collapse	:collapse;
 }
 THEAD TH {
+	padding-top : 7px;
 	text-align : left; 
 	font-size : 1.5em; 
 	background-color : #EF790C;
 	color : #FFFFFF;
 }
 TH { 
-	padding : 7px 10px 7px 10px;
+	padding : 10px 10px 7px 10px;
 	border : none; 
 	border-collapse	:collapse;
 }
@@ -328,7 +329,7 @@ function knipper(x) {
 		x.classList.add('knipper');
 		knipperTimer = setTimeout(function() {
 			x.classList.remove('knipper');
-		}, 1000 + (0.85 - x.scrollHeight/(window.innerHeight - 100)) * 14000);
+		}, 2000 + (0.85 - x.scrollHeight/(window.innerHeight - 100)) * 15000);
 	}
 }
 
@@ -587,7 +588,7 @@ KNHB: teams mogen onder vastgestelde voorwaarden in de Hoofdklasse wedstrijden e
 KNHB: aan een team mogen in bondswedstrijden ten hoogste vier teambegeleiders (coaches, verzorgers) worden toegevoegd. Hun plaats is de teambank van hun team. Deze teambegeleiders staan onder het gezag van de scheidsrechters en de bepalingen van de spelregels zijn op hen van toepassing. Door het aanvaarden van zo'n functie, dan wel het gevolg geven aan een aanwijzing als teambegeleider aanvaardt de betrokkene de verplichting tot het naleven van de bepalingen van de reglementen van de hockeybond.</div>
 </td></tr>
 
-<tr><th>2.2</th><td>
+<tr id="2.2"><th>2.2</th><td>
 <div class="per2019">
 Elk team moet tijdens de wedstrijd steeds een <a href="#doelverdediger">doelverdediger</a> in het speelveld hebben, of spelen met 11 veldspelers.
 <div class="opmerking">
@@ -718,7 +719,7 @@ beschermende bril (met zacht materiaal over het frame) te
 dragen; de medische redenen moeten worden beoordeeld door
 een bevoegde instantie en de betrokken speler moet de mogelijke
 consequenties van het spelen met een medische conditie begrijpen;
-</li><li id="4.2strafcorner"><div class="per2019">is toegestaan om bij het verdedigen van een strafcorner een glad masker in een transparante, of enkele kleur, of gezichtsmasker met metalen grill te dragen dat aansluit bij de vormen van het gezicht <span class="nadruk">zolang de strafcorner of strafbal duurt duurt, <span class="per2019">inclusief het gelijk nemen van de vrije slag als die wordt toegekend na een strafcorner waarbij de bal wordt gespeeld naar een andere speler (geen selfpass)</span></span>; het dragen van een gezichtsmasker tijdens het verdedigen van een strafcorner is primair bedoeld om de veiligheid te waarborgen; het dragen van gezichtsmaskers die in overeenstemming zijn met de onderliggende gedachte van deze richtlijn moet worden toegestaan;</div>
+</li><li id="4.2strafcorner"><div class="per2019">is toegestaan om bij het verdedigen van een strafcorner een glad masker in een transparante, of enkele kleur, of gezichtsmasker met metalen grill te dragen dat aansluit bij de vormen van het gezicht <span class="nadruk">zolang de strafcorner of strafbal duurt duurt, <span class="per2019" id="sc-2019">inclusief het gelijk nemen van de vrije slag als die wordt toegekend na een strafcorner waarbij de bal wordt gespeeld naar een andere speler (geen selfpass)</span></span>; het dragen van een gezichtsmasker tijdens het verdedigen van een strafcorner is primair bedoeld om de veiligheid te waarborgen; het dragen van gezichtsmaskers die in overeenstemming zijn met de onderliggende gedachte van deze richtlijn moet worden toegestaan;</div>
 </li><li>is niet toegestaan om zich met een masker op zodanig te gedragen dat het intimiderend is of gevaar oplevert voor tegenstanders;
 </li><li>KNHB-experiment: het is veldspelers toegestaan om, alleen om medische redenen die door de KNHB zijn goedgekeurd, een glad masker te dragen dat aansluit op de vormen van het gezicht, of zachte hoofdbescherming of oogbescherming in de vorm van een beschermende bril (met zacht materiaal over het frame). Spelers dienen op verzoek van de scheidsrechters de schriftelijke toestemming van de KNHB voor het dragen van dit masker te tonen.
 </li><li>is niet toegestaan om in andere omstandigheden hoofdbescherming (gezichtsmasker of andere beschermende hoofdbedekking) te dragen.
@@ -729,7 +730,7 @@ consequenties van het spelen met een medische conditie begrijpen;
 <tr><th>4.3</th><td>
 Doelverdedigers moeten een shirt of kledingstuk dragen dat in kleur duidelijk afwijkt van beide teams.
 <div class="opmerking per2019">Doelverdedigers moeten dit shirt of kledingstuk over de bescherming van hun bovenlichaam dragen. 
-<span class="per2019">Elleboogbescherming hoeft niet bedekt te worden door het shirt of kledingstuk.</span></div>
+<span class="per2019" id="4.3elleboog">Elleboogbescherming hoeft niet bedekt te worden door het shirt of kledingstuk.</span></div>
 </td></tr>
 
 <tr><th>4.4</th><td>
@@ -1064,7 +1065,7 @@ Een <a href="#13.3">strafcorner</a> wordt toegekend:
 <tr id="12.4"><th>12.4</th><td>
 Een <a href="#13.7">strafbal</a> wordt toegekend:
 <ol><li id="12.4a">voor een overtreding van een verdediger in zijn cirkel, waardoor het waarschijnlijk maken van een doelpunt wordt voorkomen;
-<div class="opmerking per2019">
+<div class="opmerking per2019" id="sc-losobject">
 Als de bal een kledingstuk of deel van de uitrusting raakt dat in
 de cirkel ligt, waardoor het waarschijnlijk maken van een doelpunt
 wordt voorkomen, kan een strafbal worden toegekend.
@@ -1090,7 +1091,7 @@ Plaats van de vrije slag:
 <div class="opmerking">‘Nabij’ betekent binnen speelafstand van de plaats van de overtreding en zonder daar een aanzienlijk voordeel uit te verkrijgen.
 De plaats waar een vrije slag moet worden genomen moet strenger worden beoordeeld binnen het 23-metergebied.</div>
 </li><li>Een vrije slag voor de verdediging binnen 15 meter van de achterlijn mag, evenwijdig aan de zijlijn, worden verplaatst tot ten hoogste 15 meter van de achterlijn, recht tegenover de plaats van de overtreding.
-<div class="opmerking per2019">
+<div class="opmerking per2019" id="vrijeslagincirkel">
 Een vrije slag voor de verdediging, die wordt toegekend in de cirkel,
 mag overal in de cirkel worden genomen.
 </div>
@@ -1126,7 +1127,7 @@ binnenkant van de cirkel met de speler die de selfpass neemt,
 op voorwaarde dat ze de bal niet spelen, proberen te spelen
 of het spel proberen te beïnvloeden, totdat de bal vijf meter is
 verplaatst of als alternatief is aangeraakt door een verdediger
-die de bal volgens de regels mag spelen. <span class="per2019">Als de aanvaller ervoor
+die de bal volgens de regels mag spelen. <span class="per2019" id="vrijeslagbijcirkel">Als de aanvaller ervoor
 kiest om de vrije slag niet direct te nemen, moeten alle spelers op
 minstens vijf meter van de bal staan, voordat de vrije slag wordt
 genomen.</span></div>
@@ -1193,7 +1194,7 @@ Straffen voor een overtreding tijdens het nemen van een strafcorner:
 <div class="opmerking">Als de actie om te vroeg over de achterlijn te komen wordt herhaald gedurende dezelfde strafcorner: het verdedigende team is verplicht een volgende veldspeler aan te wijzen om achter de middenlijn plaats te nemen en deze mogen niet vervangen worden.</div>
 <div class="opmerking">Een strafcorner wordt beschouwd als opnieuw genomen totdat aan een voorwaarde van regel <a href="#13.5">13.5</a> voor de voltooiing ervan is voldaan.</div>
 <div class="opmerking">Een nieuw toegekende strafcorner, in tegenstelling tot een opnieuw genomen strafcorner, mag weer met maximaal vijf verdedigers worden verdedigd.</div>
-</li><li id="13.6e"><div class="per2019">Een aanvaller komt in de cirkel voordat dit is toegestaan: de aanvaller <span class="per2019">die de strafcorner neemt vanaf de achterlijn</span> moet aan de andere kant van de middenlijn plaatsnemen. De <a href="#13.3">strafcorner</a> wordt opnieuw genomen.</div>
+</li><li id="13.6e"><div class="per2019">Een aanvaller komt in de cirkel voordat dit is toegestaan: de aanvaller <span class="per2019 nadruk" id="sc-aanvaller">die de strafcorner neemt vanaf de achterlijn</span> moet aan de andere kant van de middenlijn plaatsnemen. De <a href="#13.3">strafcorner</a> wordt opnieuw genomen.</div>
 <div class="opmerking">Aanvallers die achter de middenlijn zijn gestuurd mogen niet terugkeren voor opnieuw genomen strafcorners, maar wel voor een nieuw gegeven strafcorner.</div>
 </li><li id="13.6f">Voor een andere overtreding door de aanvallende partij: een <a href="#13.2">vrije slag</a> wordt toegekend aan het verdedigende team.
 </li></ol>
@@ -1336,6 +1337,16 @@ KNHB: persoonlijke straffen voor teambegeleiders.
 <thead><tr><th>INDEX</th></tr></thead>
 <tr><td>
 <div class="tegels">
+<div class="index-onderwerp"><span>per 2019</span></div>
+<div><a href="#5.1">speeltijd</a></div>
+<div><a href="#vrijeslagincirkel">vrije slag in cirkel</a></div>
+<div><a href="#vrijeslagbijcirkel">vrije slag bij cirkel</a></div>
+<div><a href="#sc-2019">masker bij straf&shy;corner</a></div>
+<div><a href="#2.2">doel&shy;verdediging</a></div>
+<div><a href="#sc-losobject">kleding&shy;stuk in cirkel</a></div>
+<div><a href="#4.3elleboog">kleding</a></div>
+<div><a href="#sc-aanvaller">over&shy;treding bij straf&shy;corner</a></div>
+
 <div class="index-onderwerp"><a href="#12.2">vrije slag</a></div>
 <div class="index-link-hoofd"><a href="#13.2">nemen</a></div>
 <div><a href="#13.1">plaats</a></div>
