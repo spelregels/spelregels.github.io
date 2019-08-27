@@ -473,7 +473,9 @@ document.addEventListener('DOMContentLoaded', function() {
 	var x = document.getElementById('menu').scrollWidth;
 
 	// als menu breder dan scherm, dan tekst in menu inkorten
-	if (screen.width < x) {
+	// Check werkt niet op Apple devices, bij kantelen naar landscape geeft deze de smalle kant nog steeds
+	// als breedte terug. Hieronder alleen voor iPad opgelost, daar is inkorten nooit nodig.
+	if ((screen.width < x) && !(navigator.userAgent.match(/iPad/i) ? true : false)) {
 		document.getElementById('menu-inhoud').innerHTML = '↑';
 		document.getElementById('menu-inhoud').style.paddingTop = '0px';
 		document.getElementById('menu-inhoud').style.paddingBottom = '0px';
