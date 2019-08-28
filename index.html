@@ -72,29 +72,6 @@ LI {
 	margin-top : 5px;
 }
 
-/* STIJLEN VOOR HIGHLIGHT VAN TEKST WAARNAAR VIA LINK NAAR GESPRONGEN WORDT */
-
-.knipper {
-	transition : background-color 1s;
-	background-color : #fff099;
-}
-/* Tekst met nadruk-stijl (.nadruk) wordt gewoonlijk niet benadrukt, maar tijdens 
-   het highlighten van de tekst wel. De tekst wordt dan dikgedrukt gemaakt, waarbij de 
-   tekstkleur iets lichter gemaakt wordt om de nadruk niet te sterk te maken.
-   Nadruk alleen toepassen op een SPAN:
-	- die direct descendant van een gehighlight element is
-	- direct in een tabelrij met highlight
-	- op enige plek onder een gehighlight listitem (hoeft niet *direct* onderonder te zijn)
-   Zodat nadruk niet gegeven wordt m.n. als een geheel hoofdstuk gehighlight wordt.
-*/
-.knipper > SPAN.nadruk, TR.knipper TD > SPAN.nadruk, LI.knipper SPAN.nadruk, #begrippenlijst SPAN {
-	font-weight : bold;
-	color : rgb(60,60,60);
-}
-.knipper.opmerking SPAN.nadruk, .opmerking .knipper SPAN.nadruk {
-	color : rgb(130,130,130);
-}
-
 /* STIJLEN VOOR SPELREGELS =================================== */
 
 TABLE.spelregels {
@@ -147,6 +124,31 @@ LI DIV.per2019 {
 SPAN.per2019 {
 	border-bottom : dotted 1.5px rgb(100,150,255);
 }
+
+
+/* STIJLEN VOOR HIGHLIGHT VAN TEKST WAARNAAR VIA LINK NAAR GESPRONGEN WORDT */
+
+.knipper {
+	transition : background-color 1s;
+	background-color : #fff099;
+}
+/* Tekst met nadruk-stijl (.nadruk) wordt gewoonlijk niet benadrukt, maar tijdens 
+   het highlighten van de tekst wel. De tekst wordt dan dikgedrukt gemaakt, waarbij de 
+   tekstkleur iets lichter gemaakt wordt om de nadruk niet te sterk te maken.
+   Nadruk alleen toepassen op een SPAN:
+	- die direct descendant van een gehighlight element is
+	- direct in een tabelrij met highlight
+	- op enige plek onder een gehighlight listitem (hoeft niet *direct* onderonder te zijn)
+   Zodat nadruk niet gegeven wordt m.n. als een geheel hoofdstuk gehighlight wordt.
+*/
+.knipper > SPAN.nadruk, TR.knipper TD > SPAN.nadruk, LI.knipper SPAN.nadruk, #begrippenlijst SPAN {
+	font-weight : bold;
+	color : rgb(60,60,60);
+}
+.knipper.opmerking SPAN.nadruk, .opmerking .knipper SPAN.nadruk {
+	color : rgb(130,130,130);
+}
+
 
 /* STIJLEN VOOR HET MENU ONDERIN DE PAGINA =================================== */
 
@@ -370,7 +372,10 @@ function navigatie(el) {
 			var artikel = doel.closest("tr");
 
 			// Zoeken bovenliggend lijstitem uit geordende lijst = lid binnen artikel.
-			var artikellid = doel.closest("ol li");
+			var artikellid = doel.closest("td li");
+
+			// Zoeken bovenliggend div in lijstitem uit geordende lijst = paragraaf binnen lid binnen artikel.
+			var artikellidparagraaf = doel.closest("td li div");
 
 			// Indien bovenliggend artikel gevonden.
 			if (artikel != null) {
@@ -381,13 +386,24 @@ function navigatie(el) {
 				if (topOf(doel) + doel.offsetHeight - topOf(artikel) <= window.innerHeight - headerHoogte - 75) {
 					scrollnaar = artikel;
 				}
-				// Als scrollen naar artikel niet mogelijk is omdat doelelement buiten beeld raakt, dan...
+				// Als scrollen naar artikel niet mogelijk is omdat doelelement buiten beeld raakt, dan proberen te
+				// scrollen naar artikellid binnen artikel
 				else if (artikellid != null) {
 					// ...op dezelfde manier controleren of het doelelement wel in beeld blijft bij scrollen naar 
 					// artikellid. Zo ja, dan hiernaar scrollen.
 					if (topOf(doel) + doel.offsetHeight - topOf(artikellid) <= window.innerHeight - headerHoogte - 75) {
 						scrollnaar = artikellid;
 					}
+
+					// Als scrollen naar artikellid ook niet lukt, dan proberen te scrollen naar paragraaf binnen artikellid
+					else if (artikellidparagraaf != null) {
+						// ...op dezelfde manier controleren of het doelelement wel in beeld blijft bij scrollen naar 
+						// artikellid. Zo ja, dan hiernaar scrollen.
+						if (topOf(doel) + doel.offsetHeight - topOf(artikellidparagraaf) <= window.innerHeight - headerHoogte - 75) {
+							scrollnaar = artikellidparagraaf;
+						}
+					}
+
 				}
 			}
 		}
@@ -610,7 +626,7 @@ gezichtsmasker als een strafcorner of een strafbal wordt verdedigd;
 alle teamspelers dragen hetzelfde kleur shirt.
 KNHB: Het is veldspelers toegestaan om bij het verdedigen van een
 strafcorner of strafbal handbescherming te dragen die voldoet aan
-de eisen zoals benoemd in dit reglement.
+de <a href="#handbescherming">eisen</a> zoals benoemd in dit reglement.
 </li></ol>
 </div><div class="opmerking">
 Elke wijziging tussen deze 2 opties moet worden uitgevoerd als een
@@ -706,7 +722,7 @@ tweemaal hetzelfde rugnummer worden gebruikt.</div>
 <tr id="4.2"><th>4.2</th><td>
 Spelers mogen niets dragen dat gevaarlijk kan zijn voor andere spelers.
 <div class="opmerking">Veldspelers:
-<ul><li><p>is toegestaan handbescherming te dragen, mits deze de natuurlijke grootte van de hand niet aanmerkelijk vergroten.
+<ul><li id="handbescherming"><p>is toegestaan handbescherming te dragen, mits deze de natuurlijke grootte van de hand niet aanmerkelijk vergroten.
 </p><p>Handschoenen die worden gebruikt tijdens het normale spel en/of tijdens het verdedigen van de strafcorner mogen een maximale afmeting hebben van lengte 290 mm x breedte 180 mm x hoogte 110 mm;
 </p></li><li>
 <p>dienen scheen- en enkelbeschermers en een mondbeschermer te gebruiken;</p>
