@@ -124,7 +124,14 @@ LI DIV.per2019 {
 SPAN.per2019 {
 	border-bottom : dashed 2px rgb(100,150,255);
 }
-
+.verwijderd2019 {
+	text-decoration: line-through;
+	color : rgb(100,150,255);
+/*	display : none;*/
+}
+.verwijderd2019 * {
+	color : initial;
+}
 
 /* STIJLEN VOOR HIGHLIGHT VAN TEKST WAARNAAR VIA LINK NAAR GESPRONGEN WORDT */
 
@@ -648,7 +655,8 @@ wordt toegekend, geldt de regel ongewijzigd tot het einde van de nieuwe strafcor
 </li><li>Een wissel is niet toegestaan voor verwijderde spelers gedurende hun straftijd.
 </li><li>Als de duur van een verwijdering is verstreken mag de betrokken speler worden gewisseld zonder dat hij in het speelveld terug is geweest.
 </li><li>Veldspelers die wisselen, moeten het veld verlaten dan wel betreden binnen 3 meter van de middenlijn aan de zijde van het veld die vooraf is overeengekomen met de scheidsrechters.
-</li><li id="2.3g">De tijd wordt stilgezet voor het wisselen van doelverdedigers maar niet voor overige wissels.
+</li><li class="verwijderd2019"><p>Doelverdedigers mogen bij een wissel het veld nabij hun doel verlaten of betreden.</p>
+</li><li id="2.3g" value="7">De tijd wordt stilgezet voor het wisselen van doelverdedigers maar niet voor overige wissels.
 <div class="opmerking">De tijd wordt kort stilgezet indien een doelverdediger deel uitmaakt van de wissel.
 Indien bij een voorgenomen wissel de vervangende doelverdediger nog geen volledige beschermende uitrusting draagt, wordt de tijdstop niet verlengd om deze uitrusting aan te laten trekken. De wedstrijd dient hiervoor niet te worden opgehouden.</div>
 </li>
@@ -804,23 +812,18 @@ Het team dat de meeste doelpunten heeft gescoord, is de winnaar van de wedstrijd
 <thead><tr><th>6</th><th>Begin en hervatting van de wedstrijd</th></tr></thead>
 
 <tr><th>6.1</th><td>
-<div class="per2019">
 Voor aanvang van de wedstrijd wordt getost.
 <ol><li>Het team dat de toss wint heeft de keuze tussen speelrichting in <span class="per2019">de eerste twee kwarten</span> of het nemen van de <a href="#beginslag">beginslag</a> in <span class="per2019">de eerste twee kwarten</span>.
 </li><li>Als het team dat de toss wint de speelrichting in <span class="per2019">de eerste twee kwarten</span> kiest, heeft de tegenpartij de <a href="#beginslag">beginslag</a> in <span class="per2019">de eerste twee kwarten</span>.
 </li><li>Als het team dat de toss wint de <a href="#beginslag">beginslag</a> kiest, mag de tegenpartij de speelrichting in <span class="per2019">de eerste twee kwarten</span> kiezen.
 </li></ol>
-</div>
 </td></tr>
 
 <tr><th>6.2</th><td>
-<div class="per2019">
 De richting waarin teams spelen wordt omgekeerd in <span class="per2019">het derde kwart</span> van de wedstrijd.
-</div>
 </td></tr>
 
 <tr id="6.3"><th>6.3</th><td>
-<div class="per2019">
 Een beginslag wordt genomen:
 <ol>
 <li>
@@ -830,7 +833,6 @@ Om het spel na de rust <span class="per2019">en bij het vierde kwart</span> opni
 </li>
 <li>Na een doelpunt door een speler van het team tegen wie het doelpunt is gescoord.
 </li></ol>
-</div>
 </td></tr>
 
 <tr id="beginslag"><th>6.4</th><td>
@@ -1203,6 +1205,13 @@ Een strafcorner is ten einde als:
 <div class="opmerking">Indien het spel gedurende een strafcorner aan het einde van een kwart onderbroken wordt zonder dat een spelstraf wordt opgelegd en anders dus een bully zou zijn gegeven, moet de <a href="#13.3">strafcorner</a> opnieuw worden genomen.</div>
 </td></tr>
 
+<tr id="13.6verwijderd" class="verwijderd2019"><th>13.6</th><td>
+Wanneer de bal na het nemen van een strafcorner een tweede maal buiten de cirkel komt, geldt:
+<ol><li>er mag weer gewisseld worden;
+</li><li>een uitspeelstrafcorner is ten einde.
+</li></ol>
+</td></tr>
+
 <tr id="13.6"><th>13.6</th><td>
 Straffen voor een overtreding tijdens het nemen van een strafcorner:
 <ol><li id="13.6a">De aanvaller die een strafcorner neemt vanaf de achterlijn, heeft niet ten minste één voet buiten het veld aan de grond: de <a href="#13.3">strafcorner</a> wordt opnieuw genomen.
@@ -1370,6 +1379,7 @@ KNHB: persoonlijke straffen voor teambegeleiders.
 <div><a href="#sc-losobject">kleding&shy;stuk in cirkel</a></div>
 <div><a href="#4.3elleboog">kleding</a></div>
 <div><a href="#sc-aanvaller">over&shy;treding bij straf&shy;corner</a></div>
+<div><a href="#13.6verwijderd">einde straf&shy;corner</a></div>
 
 <div class="index-onderwerp"><a href="#12.2">vrije slag</a></div>
 <div class="index-link-hoofd"><a href="#13.2">nemen</a></div>
