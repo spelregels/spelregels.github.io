@@ -23,6 +23,9 @@ TABLE {
 	border : none; 
 	border-collapse	:collapse;
 	width : 100%;
+	/* header staat vaak 1 pixelrij onder de bovenkant van de pagina, je ziet dan de tekst ook
+	   op die pixelrij voorbij komen, de negatieve marge lost dit op */
+	margin-top : -1px;
 }
 THEAD {
 	border : none; 
@@ -90,11 +93,6 @@ TABLE.sticky-tabelkop THEAD TH, #index THEAD TH {
 	position : -webkit-sticky;
 	position : sticky;
 	top : 0px;
-}
-TABLE.sticky-tabelkop {
-	/* sticky header staat vaak 1 pixelrij onder de bovenkant van de pagina, je ziet dan de tekst ook
-	   op die pixelrij voorbij komen, de negatieve marge lost dit op */
-	margin-top : -1px;
 }
 TABLE.spelregels TH { 
 	text-align : left;
@@ -213,9 +211,9 @@ DIV.rand {
 	clear : both;
 }
 
-/* STIJLEN VOOR SPELREGELTABELLEN =================================== */
+/* STIJLEN VOOR hulptabelLEN =================================== */
 
-TABLE.spelregeltabel {
+TABLE.hulptabel {
 	max-width : 750px;
 }
 /* matrix: tabel met kolommen met vaste breedte, cel linksboven geen
@@ -227,18 +225,18 @@ TABLE.matrix-tabel {
 TABLE.matrix-tabel TR:first-child TD A, TABLE.matrix-tabel TR TD:first-child A {
 	font-weight : normal;
 }
-TABLE.matrix-tabel TR:first-child TD:first-child, TABLE.spelregeltabel TD.normaal {
+TABLE.matrix-tabel TR:first-child TD:first-child, TABLE.hulptabel TD.normaal {
 	text-align : initial;
 	background-color : initial;
 }
-TABLE.spelregeltabel TD {
+TABLE.hulptabel TD {
 	text-align : center;
 	height : 65px;
 	border-top : solid 2px white;
 	border-right : solid 2px #FFFFFF;
 	padding : 8px;
 }
-TABLE.spelregeltabel TR TD:last-child {
+TABLE.hulptabel TR TD:last-child {
 	border-right : none;
 }
 
@@ -285,16 +283,16 @@ DIV.tegels DIV.index-onderwerp {
 }
 /* KLEUREN VOOR TABELLEN, INDEX, INHOUD =================================== */
 
-TABLE.spelregeltabel TD.rood {
+TABLE.hulptabel TD.rood {
 	background-color : #FFAAAA;
 }
-TABLE.spelregeltabel TD.geel, DIV.tegels DIV.index-link-hoofd  {
+TABLE.hulptabel TD.geel, DIV.tegels DIV.index-link-hoofd  {
 	background-color : #fff2cc;
 }
-TABLE.spelregeltabel TD.groen {
+TABLE.hulptabel TD.groen {
 	background-color : #AAFFAA;
 }
-TABLE.spelregeltabel TD {
+TABLE.hulptabel TD {
 	background-color : #E9E9E9;
 }
 DIV.tegels DIV.index-onderwerp {
@@ -303,7 +301,7 @@ DIV.tegels DIV.index-onderwerp {
 
 /* KLEUREN IN INDEX EN HULPTABELLEN ======================================= */
 
-TABLE.appendix THEAD TH {
+TABLE.appendix THEAD TH, TABLE.hulptabel THEAD TH {
 	background-color : #777777;
 }
 </style>
@@ -432,9 +430,12 @@ function navigatie(el) {
 		// de standaard scrollfunctie plaatst het doelelement helemaal bovenaan de pagina en zet de sticky header eroverheen.
 		// Als de bestemming (het begin van) de tabel zelf is dan hoeft de scrollpositie niet gecorrigeerd
 		// te worden, dit gaat wel goed.
-		// De +1 in de scroll-hoeveelheid heeft te maken met de negatieve top-marge op tabellen met sticky kop, zie de stijl voor informatie.
+		// De +1 in de scroll-hoeveelheid heeft te maken met de negatieve top-marge op tabellen, zie de TABEL stijl voor informatie.
 		if ((headerHoogte > 0) && (y != scrollnaar)) {
-			window.scrollBy(0, -headerHoogte+1);
+			window.scrollBy(0, -headerHoogte + 1);
+		}
+		else {
+			window.scrollBy(0, 1);
 		}
 		
 		// Doelelement highlighten om duidelijker te maken dat dit de tekst is waarnaar gesprongen is.
@@ -1370,7 +1371,7 @@ KNHB: persoonlijke straffen voor teambegeleiders
 <thead><tr><th>INDEX</th></tr></thead>
 <tr><td>
 <div class="tegels">
-<div class="index-onderwerp"><span>spelregel wijzigingen</span></div>
+<div class="index-onderwerp"><span>spelregel wijzi&shy;ging&shy;en</span></div>
 <div class="index-link-hoofd"><span>per 2020</span></div>
 <div><a href="#groenbegeleider">groene kaart begeleider</a></div>
 <div class="index-link-hoofd"><span>per 2019</span></div>
@@ -1428,8 +1429,8 @@ KNHB: persoonlijke straffen voor teambegeleiders
 
 <div class="witruimte"></div>
 
-<table class="appendix"><thead><tr><th>straf voor verdediger bij overtreding</th></tr></thead></table>
-<table class="spelregeltabel matrix-tabel">
+<table class="hulptabel matrix-tabel">
+<thead><tr><th colspan="5">straf voor verdediger bij overtreding</th></tr></thead>
 <tr><td rowspan="2">
 </td><td rowspan="2">geen opzet
 </td><td colspan="2">opzet
@@ -1461,8 +1462,8 @@ KNHB: persoonlijke straffen voor teambegeleiders
 
 <div class="rand"></div>
 
-<table id="strafcornertabel" class="appendix"><thead><tr><th>straf bij overtreding tijdens strafcorner</th></tr></thead></table>
-<table class="spelregeltabel">
+<table id="strafcornertabel" class="hulptabel">
+<thead><tr><th colspan="2">straf bij overtreding tijdens strafcorner</th></tr></thead>
 <tr><td>
 opnieuw nemen
 </td><td class="normaal">
@@ -1487,8 +1488,8 @@ vrije slag verdediging
 
 <div class="rand"></div>
 
-<table id="slagentoegestaan" class="appendix"><thead><tr><th>slagen toegestaan</th></tr></thead></table>
-<table class="spelregeltabel matrix-tabel">
+<table id="slagentoegestaan" class="hulptabel matrix-tabel">
+<thead><tr><th colspan="6">slagen toegestaan</th></tr></thead>
 <tr><td>
 </td><td><a href="#push">push</a>
 </td><td><a href="#slag">slag</a>
