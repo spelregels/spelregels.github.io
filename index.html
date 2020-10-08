@@ -23,9 +23,6 @@ TABLE {
 	border : none; 
 	border-collapse	:collapse;
 	width : 100%;
-	/* header staat vaak 1 pixelrij onder de bovenkant van de pagina, je ziet dan de tekst ook
-	   op die pixelrij voorbij komen, de negatieve marge lost dit op */
-	margin-top : -1px;
 }
 THEAD {
 	border : none; 
@@ -93,6 +90,11 @@ TABLE.sticky-tabelkop THEAD TH, #index THEAD TH {
 	position : -webkit-sticky;
 	position : sticky;
 	top : 0px;
+}
+TABLE.sticky-tabelkop {
+	/* sticky header staat vaak 1 pixelrij onder de bovenkant van de pagina, je ziet dan de tekst ook
+	   op die pixelrij voorbij komen, de negatieve marge lost dit op */
+	margin-top : -1px;
 }
 TABLE.spelregels TH { 
 	text-align : left;
