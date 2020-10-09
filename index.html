@@ -440,8 +440,8 @@ function navigatie(el) {
 			window.scrollBy(0, 1);
 		}
 		
-		// Doelelement highlighten om duidelijker te maken dat dit de tekst is waarnaar gesprongen is.
-		knipper(doel);
+		// Doelelement, als dat in een spelregeltabel staat, highlighten om duidelijker te maken dat dit de tekst is waarnaar gesprongen is.
+		if (y != null) { knipper(doel) };
 	}
 }
 
