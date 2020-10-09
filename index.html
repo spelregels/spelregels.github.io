@@ -84,9 +84,12 @@ TABLE.spelregels {
    Sticky toewijzen op THEAD zelf werkt niet in Chrome
    Klasse wordt in javascript toegewezen aan alle tabellen met 'spelregels'
    klasse. Indien er geen ondersteuning is voor Javascript, dan zorgt dit
-   ervoor dat de headers ook niet sticky zijn, wat gewenst is omdat de 
-   navigatie via links in het document dan niet goed gaat. */
-TABLE.sticky-tabelkop THEAD TH, #index THEAD TH {
+   ervoor dat deze headers ook niet sticky zijn. Navigatie via hyperlinks naar 
+   tekst in tabellen met sticky headers gaat zonder javascript (functie Navigatie
+   in het script hieronder) niet goed. 
+   Alleen op de index wordt de stijl in de HTML toegewezen; er zijn geen links naar de
+   index toe, waardoor bovenbedoeld navigatie probleem zich hier niet voordoet.*/
+TABLE.sticky-tabelkop THEAD TH {
 	position : -webkit-sticky;
 	position : sticky;
 	top : 0px;
@@ -1369,7 +1372,7 @@ KNHB: persoonlijke straffen voor teambegeleiders
 
 <div class="witruimte"></div>
 
-<table id="index" class="appendix">
+<table id="index" class="appendix sticky-tabelkop">
 <thead><tr><th>INDEX</th></tr></thead>
 <tr><td>
 <div class="tegels">
