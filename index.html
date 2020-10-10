@@ -216,7 +216,7 @@ DIV.rand {
 	clear : both;
 }
 
-/* STIJLEN VOOR hulptabelLEN =================================== */
+/* STIJLEN VOOR HULPTABELLEN =================================== */
 
 TABLE.hulptabel {
 	max-width : 750px;
@@ -243,6 +243,18 @@ TABLE.hulptabel TD {
 }
 TABLE.hulptabel TR TD:last-child {
 	border-right : none;
+}
+TABLE.hulptabel TD.rood {
+	background-color : #FFAAAA;
+}
+TABLE.hulptabel TD.geel, DIV.tegels DIV.index-link-hoofd  {
+	background-color : #fff2cc;
+}
+TABLE.hulptabel TD.groen {
+	background-color : #AAFFAA;
+}
+TABLE.hulptabel TD {
+	background-color : #E9E9E9;
 }
 
 /* STIJLEN VOOR TEGELS (INDEX EN INHOUD) =================================== */
@@ -285,22 +297,6 @@ DIV.tegels DIV A:HOVER {
 /* stijl die de tegel aan het begin van een nieuwe regel plaatst */
 DIV.tegels DIV.index-onderwerp {
 	clear : left;
-}
-/* KLEUREN VOOR TABELLEN, INDEX, INHOUD =================================== */
-
-TABLE.hulptabel TD.rood {
-	background-color : #FFAAAA;
-}
-TABLE.hulptabel TD.geel, DIV.tegels DIV.index-link-hoofd  {
-	background-color : #fff2cc;
-}
-TABLE.hulptabel TD.groen {
-	background-color : #AAFFAA;
-}
-TABLE.hulptabel TD {
-	background-color : #E9E9E9;
-}
-DIV.tegels DIV.index-onderwerp {
 	background-color : #FFBB00;
 }
 
@@ -447,7 +443,6 @@ function navigatie(el) {
 		if (y != null) { knipper(doel) };
 	}
 }
-
 </script>
 <script>
 // script om actieve link(s) uit menu mbv stijl als actief te markeren
@@ -546,7 +541,6 @@ function scrollHorizontal(el) {
 		x.scrollLeft = elementLinks;
 	}
 }
-
 </script>
 <script>
 // script voor aanpassingen op kleine schermen (aanname dat dat mobiele telefoons zijn
@@ -579,6 +573,29 @@ document.addEventListener('DOMContentLoaded', function() {
 	}
 });
 </script>
+<script>
+// Standaard gedrag is dat home en end zichtbaar scrollen, terwijl onderweg het menu ook
+// zichtbaar maakt dat alles langsgelopen wordt. Met onderstaand script hebben home en end een
+// directe werking, waarbij End bovendien naar de index gaat i.p.v. naar het lege stuk helemaal
+// onderaan de HTML pagina.
+function homeEnd() {
+
+	var keynum = window.event.keyCode;
+	
+	if (keynum == 35) {
+		document.getElementById('index').scrollIntoView();
+		window.scrollBy(0, 1);
+		return false;
+	}
+	else if (keynum == 36) {
+		window.scrollTo(0, 0);
+		return false;
+	}
+
+}
+document.onkeydown 	= homeEnd;
+
+</script>
 </head>
 
 <body>
@@ -603,7 +620,8 @@ document.addEventListener('DOMContentLoaded', function() {
 <div><a href="#14">persoon&shy;lijke straffen</a></div>
 <div><a href="#begrippenlijst">termen en begrip&shy;pen</a></div>
 </div>
-</td></tr></table>
+</td></tr>
+</table>
 
 <div class="rand"></div>
 	
