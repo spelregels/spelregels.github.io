@@ -458,33 +458,51 @@ window.onscroll = function() {markeren();};
 // Voor alle tabellen in de 'viewport': de link daar naartoe vanuit het menu, voorzien van stijl.
 // De eerste/bovenste zichtbare tabel krijgt stijl 'actief', de rest krijgt de stijl 'zichtbaar'.
 function markeren() {
+	// alle tabellen opzoeken
 	var x = document.getElementsByTagName("TABLE");
 	var eerste = true;
 	var i;
+	// alle tabellen langslopen
 	for (i = 0; i < x.length; i++) {
+		// zoek menu-item dat verwijst naar de tabel (in variabele x)
 		var elcl = document.querySelectorAll('#menu a[href="#' + x[i].id + '"]')[0];
+		// als er een menu-item is dat naar de tabel verwijst
 		if (typeof(elcl) != 'undefined') {
+			// als de tabel zichtbaar weergegeven wordt
 			if (elementInViewport(x[i])) {
+				// als het de *eerste* tabel is die zichtbaar is
 				if (eerste) {
 					eerste = false;
-					document.querySelectorAll('#menu a[href="#' + x[i].id + '"]')[0].classList.remove('zichtbaar')
-					document.querySelectorAll('#menu a[href="#' + x[i].id + '"]')[0].classList.add('actief');
+					// vaststellen of menu-item al actief is
+					var alactief = false;
+					if (elcl.classList.contains('actief')) { alactief = true; }
+					// als het menu-item niet al als actief gemarkeerd is
+					if (!(alactief)) {
+						// op menu-item actief-stijl aanzetten (en zichtbaar-stijl weghalen)
+						elcl.classList.remove('zichtbaar')
+						elcl.classList.add('actief');
+						// menu-item in beeld scrollen als dat niet volledig in beeld is
+						scrollHorizontal (elcl);
+					}
 				}
+				// op volgende zichtbare tabellen zichtbaar-stijl aanzetten (en actief-stijl weghalen)
 				else {
-					document.querySelectorAll('#menu a[href="#' + x[i].id + '"]')[0].classList.remove('actief')
-					document.querySelectorAll('#menu a[href="#' + x[i].id + '"]')[0].classList.add('zichtbaar');
+					elcl.classList.remove('actief')
+					elcl.classList.add('zichtbaar');
 				}
 			}
+			// op niet-zichtbare tabellen beide stijlen weghalen
 			else { 
-				document.querySelectorAll('#menu a[href="#' + x[i].id + '"]')[0].classList.remove('actief')
-				document.querySelectorAll('#menu a[href="#' + x[i].id + '"]')[0].classList.remove('zichtbaar')
+				elcl.classList.remove('actief')
+				elcl.classList.remove('zichtbaar')
 			}
 		}
 	}
 }
 
-// bepalen of element zichtbaar is in 'viewport'; de definitie van 'zichtbaar' wordt bepaald door de
-// condities op top en (top + height) aan het einde van de functie
+// bepalen of element, verticaal gezien, zichtbaar is in 'viewport'; de definitie van 'zichtbaar' wordt bepaald door de
+// condities op top en (top + height) aan het einde van de functie. Hierin worden minimum eisen gesteld aan de hoeveelheid
+// die zichtbaar moet zijn voordat het als 'zichtbaar' beschouwd wordt.
 function elementInViewport(el) {
 	var top = el.offsetTop;
 	var height = el.offsetHeight;
@@ -504,6 +522,31 @@ function elementInViewport(el) {
 document.addEventListener('DOMContentLoaded', function() {
    markeren();
 });
+
+// scroll menu-item el in beeld indien dat niet volledig in beeld is
+function scrollHorizontal(el) {
+	// verwijzing naar het menu
+	var x = document.getElementById('menu');
+	// absolute positie van linkerkant van menu-item
+	var elementLinks = el.offsetLeft;
+	// absolute positie van rechterkant van menu-item
+	var elementRechts = elementLinks + el.offsetWidth
+	// zichtbare absolute positie helemaal links
+	var zichtbaarLinks = x.scrollLeft; 
+	// zichtbare absolute positie helemaal rechts
+	var zichtbaarRechts =  zichtbaarLinks + (x.offsetWidth);
+	
+	// als rechterkant van menu-item aan de rechterkant buiten het zichtbare uitsteekt, dan item helemaal rechts in beeld scrollen
+	if (elementRechts > zichtbaarRechts) {
+		x.scrollLeft = elementRechts - x.offsetWidth;
+	}
+	
+	// als linkerkant van menu-item aan de linkerkant buiten het zichtbare uitsteekt, dan item helemaal links in beeld scrollen
+	if (elementLinks < zichtbaarLinks) {
+		x.scrollLeft = elementLinks;
+	}
+}
+
 </script>
 <script>
 // script voor aanpassingen op kleine schermen (aanname dat dat mobiele telefoons zijn
@@ -521,7 +564,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		document.getElementById('menu-termen').style.fontWeight = 'normal';
 	}
 	
-	// op klein scherm alle HOVER effecten uitzetten; op een mobiele telefoon zijn deze ongewenste zichtbaar
+	// op klein scherm alle HOVER effecten uitzetten; op een mobiele telefoon zijn deze ongewenst zichtbaar
 	// als na het volgen van een link er met back van de browser teruggekeerd wordt.
 	if (screen.width <= 600) {
 		var stylesheet = document.styleSheets[0];
