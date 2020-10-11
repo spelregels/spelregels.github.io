@@ -574,6 +574,30 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 <script>
+function hoofdstukTerugVerder(terug) {
+	// alle tabellen opzoeken
+	var x = document.getElementsByTagName("TABLE");
+	var eerste = true;
+	var i = 1;
+	// zoeken eerste tabel die zichtbaar is
+	while ((i <= x.length) & ((x[i].offsetTop + x[i].offsetHeight) < window.pageYOffset)) {
+		i++;
+	}
+	if (terug) {
+		// indien niet bovenaan hoofdstuk, dan terug naar begin hoofdstuk
+		if (x[i].offsetTop < window.pageYOffset - 2) {
+			x[i].scrollIntoView();
+		}
+		// anders naar vorig hoofdstuk, als dat er is
+		else if (i > 1) {
+			x[i-1].scrollIntoView();
+		}
+	}
+	else if (i < x.length) {
+		x[i+1].scrollIntoView();
+	}
+}
+
 // Standaard gedrag is dat home en end zichtbaar scrollen, terwijl onderweg het menu ook
 // zichtbaar maakt dat alles langsgelopen wordt. Met onderstaand script hebben home en end een
 // directe werking, waarbij End bovendien naar de index gaat i.p.v. naar het lege stuk helemaal
@@ -591,10 +615,17 @@ function homeEnd() {
 		window.scrollTo(0, 0);
 		return false;
 	}
+	else if (keynum == 37) {
+		hoofdstukTerugVerder(true);
+		return false;
+	}
+	else if (keynum == 39) {
+		hoofdstukTerugVerder(false);
+		return false;
+	}
 
 }
 document.onkeydown 	= homeEnd;
-
 </script>
 </head>
 
