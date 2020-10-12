@@ -583,7 +583,7 @@ function hoofdstukTerugVerder(terug) {
 	var eerste = true;
 	var i = 0;
 	// zoeken eerste tabel die zichtbaar is
-	while ((i <= x.length) & ((x[i].offsetTop + x[i].offsetHeight) < window.pageYOffset)) {
+	while ((i < x.length) & ((x[i].offsetTop + x[i].offsetHeight) < window.pageYOffset)) {
 		i++;
 	}
 	if (terug) {
@@ -596,7 +596,7 @@ function hoofdstukTerugVerder(terug) {
 			x[i-1].scrollIntoView();
 		}
 	}
-	else if (i < x.length) {
+	else if (i < x.length - 1) {
 		x[i+1].scrollIntoView();
 	}
 }
