@@ -581,7 +581,7 @@ function hoofdstukTerugVerder(terug) {
 	// alle tabellen opzoeken
 	var x = document.getElementsByTagName("TABLE");
 	var eerste = true;
-	var i = 1;
+	var i = 0;
 	// zoeken eerste tabel die zichtbaar is
 	while ((i <= x.length) & ((x[i].offsetTop + x[i].offsetHeight) < window.pageYOffset)) {
 		i++;
@@ -592,7 +592,7 @@ function hoofdstukTerugVerder(terug) {
 			x[i].scrollIntoView();
 		}
 		// anders naar vorig hoofdstuk, als dat er is
-		else if (i > 1) {
+		else if (i > 0) {
 			x[i-1].scrollIntoView();
 		}
 	}
