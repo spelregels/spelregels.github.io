@@ -252,12 +252,25 @@ TABLE.matrix-tabel TR:first-child TD:first-child, TABLE.hulptabel TD.normaal {
 	text-align : initial;
 	background-color : initial;
 }
+/* Hulptabellen krijgen borders tussen de cellen, maar niet aan de buitenrand van de 
+tabel, zodat de tabel strak tegen de linkerkant en rechterkant van het venster staat.
+NB: bij cellen die over meerdere rijen gaan (rowspan > 1) hoeft de eerste cel in een rij 
+niet helemaal links te staan, en de laatste niet helemaal rechts. Zie eerste hulptabel.
+Daarom krijgen cellen zowel links als rechts een border. De linker wordt
+weggehaald op de eerste cel, de rechter wordt weggehaald op de rechter. Als de eerste
+cel niet helemaal links staat, gaat het toch goed omdat de cel links daarvan nog zijn
+rechter border heeft. Gespiegeld geldt hetzelfde voor een laatste cel die niet helemaal
+rechts staat */
 TABLE.hulptabel TD {
 	text-align : center;
 	height : 4.1rem;
 	border-top : solid 2px white;
+	border-left : solid 2px #FFFFFF;
 	border-right : solid 2px #FFFFFF;
 	padding : 0.5rem;
+}
+TABLE.hulptabel TR TD:first-child {
+	border-left : none;
 }
 TABLE.hulptabel TR TD:last-child {
 	border-right : none;
