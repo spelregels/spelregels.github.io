@@ -596,7 +596,13 @@ function scrollHorizontal(el) {
 }
 </script>
 <script>
-// script voor aanpassingen op kleine schermen (aanname dat dat mobiele telefoons zijn
+// script voor aanpassingen op touch schermen en kleine schermen (mobiele telefoons)
+function hasTouch() {
+  return 'ontouchstart' in document.documentElement
+         || navigator.maxTouchPoints > 0
+         || navigator.msMaxTouchPoints > 0;
+}
+
 document.addEventListener('DOMContentLoaded', function() {
 	var x = document.getElementById('menu').scrollWidth;
 
@@ -613,12 +619,12 @@ document.addEventListener('DOMContentLoaded', function() {
 	
 	// op klein scherm alle HOVER effecten uitzetten; op een mobiele telefoon zijn deze ongewenst zichtbaar
 	// als na het volgen van een link er met back van de browser teruggekeerd wordt.
-	if (screen.width <= 600) {
+	if (hasTouch()) {
 		var stylesheet = document.styleSheets[0];
 		for(var i = 0; i < stylesheet.cssRules.length; i++) {
 			var rule = stylesheet.cssRules[i];
 			var selector = rule.selectorText;
-			if (selector.match(":hover") != null)	{
+			if (selector.match(":hover"))	{
 				stylesheet.deleteRule(i);
 				i--;
 			}
