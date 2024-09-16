@@ -332,7 +332,7 @@ TABLE.index THEAD TH, TABLE.hulptabel THEAD TH {
 /* Op touchschermen wil je geen hover effecten omdat die actief blijven nadat een element dat aangetikt is. 
    hover : hover selecteert op devices waar hovering mogelijk is, en sluit touch schermen dus uit. */
 
-@media (hover: pointer) {
+@media (hover: hover) {
 	A:HOVER { color : #EF790C; }
 	A.video:HOVER {
 		border-color : #999999 #000000 #000000 #999999;
@@ -369,7 +369,7 @@ TABLE.index THEAD TH, TABLE.hulptabel THEAD TH {
 
 /* Op niet-touchschermen moeten de hovers ingesteld worden. */ 
 
-@media (hover: pointer) and (prefers-color-scheme: dark) {
+@media (hover: hover) and (prefers-color-scheme: dark) {
   #menu A:hover, #menu A.actief:hover, #menu A.zichtbaar:hover { background-color : rgb(210,210,210); color : #EF790C; }
 }
 
