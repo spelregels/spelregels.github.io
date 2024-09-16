@@ -64,9 +64,6 @@ A {
 	font-weight : bold;
 	color : inherit;
 }
-A:HOVER { 
-	color : #EF790C;
-}
 A:FOCUS {
 	outline-color: #EF790C;
 }
@@ -83,11 +80,6 @@ A.video {
 	border-radius : 2px;
 	border-color: #FFB93C #EF790C #EF790C #FFB93C;
 	background-image: linear-gradient(to bottom right, white, #F3F3F3, #CCCCCC);
-}
-A.video:HOVER {
-	border-color : #999999 #000000 #000000 #999999;
-	background-image : none;
-	background-color : #CCCCCC;
 }
 OL { 
 	list-style-type : lower-alpha;
@@ -217,9 +209,6 @@ SPAN.per2024 {
 #menu A:first-child {
 	padding-left : 10px;
 }
-#menu A:hover, #menu A.actief:hover, #menu A.zichtbaar:hover {
-	background-color : black;
-}
 #menu A.actief {
 	background-color : white;
 	border-bottom-color : #EF790C;
@@ -325,10 +314,6 @@ DIV.tegels DIV A, DIV.tegels DIV SPAN {
 	text-decoration : none;
 	font-weight : normal;
 }
-DIV.tegels DIV A:HOVER {
-	background-color : #EF790C;
-	color : white;
-}
 /* stijl die de tegel aan het begin van een nieuwe regel plaatst */
 DIV.tegels DIV.index-onderwerp {
 	clear : left;
@@ -341,8 +326,29 @@ TABLE.index THEAD TH, TABLE.hulptabel THEAD TH {
 	background-color : #777777;
 }
 
-/* AANPASSINGEN OP KLEUREN IN DONKERE MODUS
+/* AANPASSINGEN OP KLEUREN IN DONKERE MODUS cq DARK MODE
 ======================================= */
+
+/* Op touchschermen wil je geen hover effecten omdat die actief blijven nadat een element dat aangetikt is. 
+   hover : hover selecteert op devices waar hovering mogelijk is, en sluit touch schermen dus uit. */
+
+@media (hover: pointer) {
+	A:HOVER { color : #EF790C; }
+	A.video:HOVER {
+		border-color : #999999 #000000 #000000 #999999;
+		background-image : none;
+		background-color : #CCCCCC;
+	}
+	DIV.tegels DIV A:HOVER {
+		background-color : #EF790C;
+		color : white;
+	}
+	#menu A:hover, #menu A.actief:hover, #menu A.zichtbaar:hover {
+		background-color : black;
+	}
+}
+
+/* Aanpassing in de kleuren voor de dark mode. */
 
 @media (prefers-color-scheme: dark) {
 	BODY { background-color : black; }
@@ -361,14 +367,12 @@ TABLE.index THEAD TH, TABLE.hulptabel THEAD TH {
 	#menu A.actief { background-color : black; color : rgb(200,200,200); }
 }
 
-/* Met javascript worden de hover effecten voor touchscreens weggehaald, maar dat heeft  
-geen effect op het @media gedeelte. Daarom worden de hover effecten conditioneel toegepast.
-Wat eigenlijk in zijn algemeenheid zou moeten gebeuren, zodat het javascript weg kan. */
+/* Op niet-touchschermen moeten de hovers ingesteld worden. */ 
 
-@media (hover: hover) and (prefers-color-scheme: dark) {
+@media (hover: pointer) and (prefers-color-scheme: dark) {
   #menu A:hover, #menu A.actief:hover, #menu A.zichtbaar:hover { background-color : rgb(210,210,210); color : #EF790C; }
-
 }
+
 </style>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -602,45 +606,6 @@ function scrollHorizontal(el) {
 		x.scrollLeft = elementLinks;
 	}
 }
-</script>
-<script>
-// script voor aanpassingen op touch schermen en kleine schermen (mobiele telefoons)
-function hasTouch() {
-  return 'ontouchstart' in document.documentElement
-         || navigator.maxTouchPoints > 0
-         || navigator.msMaxTouchPoints > 0;
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-	var x = document.getElementById('menu').scrollWidth;
-
-	// als menu breder dan scherm, dan tekst in menu inkorten
-	// Check werkt niet op Apple devices, bij kantelen naar landscape geeft deze de smalle kant nog steeds
-	// als breedte terug. Hieronder alleen voor iPad opgelost, daar is inkorten nooit nodig.
-	if ((screen.width < x) && !(navigator.userAgent.match(/iPad/i) ? true : false)) {
-		document.getElementById('menu-inhoud').innerHTML = '↑';
-		document.getElementById('menu-inhoud').style.paddingTop = '0px';
-		document.getElementById('menu-inhoud').style.paddingBottom = '0px';
-		document.getElementById('menu-termen').innerHTML = '?';
-		document.getElementById('menu-termen').style.fontWeight = 'normal';
-	}
-	
-	// op klein scherm alle HOVER effecten uitzetten; op een mobiele telefoon zijn deze ongewenst zichtbaar
-	// als na het volgen van een link er met back van de browser teruggekeerd wordt.
-	if (hasTouch()) {
-		var stylesheet = document.styleSheets[0];
-		for(var i = 0; i < stylesheet.cssRules.length; i++) {
-			var rule = stylesheet.cssRules[i];
-			var selector = rule.selectorText;
-			if ( typeof(selector) != 'undefined' ) {
-				if (selector.match(":hover") != null)	{
-					stylesheet.deleteRule(i);
-					i--;
-				}
-			}
-		}
-	}
-});
 </script>
 <script>
 function hoofdstukTerugVerder(terug) {
