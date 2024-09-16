@@ -608,6 +608,24 @@ function scrollHorizontal(el) {
 }
 </script>
 <script>
+// script voor aanpassingen op kleine schermen (aanname dat dat mobiele telefoons zijn
+document.addEventListener('DOMContentLoaded', function() {
+	var x = document.getElementById('menu').scrollWidth;
+
+	// als menu breder dan scherm, dan tekst in menu inkorten
+	// Check werkt niet op Apple devices, bij kantelen naar landscape geeft deze de smalle kant nog steeds
+	// als breedte terug. Hieronder alleen voor iPad opgelost, daar is inkorten nooit nodig.
+	if ((screen.width < x) && !(navigator.userAgent.match(/iPad/i) ? true : false)) {
+		document.getElementById('menu-inhoud').innerHTML = '↑';
+		document.getElementById('menu-inhoud').style.paddingTop = '0px';
+		document.getElementById('menu-inhoud').style.paddingBottom = '0px';
+		document.getElementById('menu-termen').innerHTML = '?';
+		document.getElementById('menu-termen').style.fontWeight = 'normal';
+	}
+	
+});
+</script>
+<script>
 function hoofdstukTerugVerder(terug) {
 	// alle tabellen opzoeken
 	var x = document.getElementsByTagName("TABLE");
