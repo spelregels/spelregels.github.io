@@ -624,7 +624,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		for(var i = 0; i < stylesheet.cssRules.length; i++) {
 			var rule = stylesheet.cssRules[i];
 			var selector = rule.selectorText;
-			if not ( typeof selector === "undefined" ) {
+			if ( typeof(selector) != 'undefined' ) {
 				if (selector.match(":hover") != null)	{
 					stylesheet.deleteRule(i);
 					i--;
