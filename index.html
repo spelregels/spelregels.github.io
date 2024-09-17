@@ -625,6 +625,17 @@ document.addEventListener('DOMContentLoaded', function() {
 		document.getElementById('menu-index').innerHTML = 'i';
 		document.getElementById('menu-index').style.paddingRight = '22px';
 	}
+
+	if (screen.width <= 600) {
+		var stylesheet = document.styleSheets[0];
+		for(var i = 0; i < stylesheet.cssRules.length; i++) {
+			var rule = stylesheet.cssRules[i];
+			if (rule.selectorText == '#menu a') {
+				rule.style.paddingBottom = '10px';
+				rule.style.fontSize = '1.2rem';
+			}
+		}
+	}
 	
 });
 </script>
