@@ -624,18 +624,17 @@ document.addEventListener('DOMContentLoaded', function() {
 //		document.getElementById('menu-termen').style.fontWeight = 'normal';
 		document.getElementById('menu-index').innerHTML = 'i';
 		document.getElementById('menu-index').style.paddingRight = '22px';
-	}
 
-	if (screen.width <= 800) {
 		var stylesheet = document.styleSheets[0];
 		for(var i = 0; i < stylesheet.cssRules.length; i++) {
 			var rule = stylesheet.cssRules[i];
 			if (rule.selectorText == '#menu a') {
-				rule.style.paddingBottom = '50px';
+				rule.style.paddingBottom = '15px';
 				rule.style.fontSize = '1.2rem';
 			}
 		}
 	}
+
 	
 });
 </script>
