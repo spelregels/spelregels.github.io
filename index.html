@@ -617,18 +617,8 @@ document.addEventListener('DOMContentLoaded', function() {
 	// als breedte terug. Hieronder alleen voor iPad opgelost, daar is inkorten nooit nodig.
 	if ((screen.width < x) && !(navigator.userAgent.match(/iPad/i) ? true : false)) {
 		document.getElementById('menu-inhoud').innerHTML = '↑';
-		document.getElementById('menu-termen').innerHTML = 't';
-		document.getElementById('menu-index').innerHTML = 'i';
+		document.getElementById('menu-termen').innerHTML = '?';
 		document.getElementById('menu-index').style.paddingRight = '10px';
-
-		var stylesheet = document.styleSheets[0];
-		for(var i = 0; i < stylesheet.cssRules.length; i++) {
-			var rule = stylesheet.cssRules[i];
-			if (rule.selectorText == '#menu a') {
-				rule.style.fontSize = '1.3rem';
-			}
-		}
-
 	}
 });
 </script>
