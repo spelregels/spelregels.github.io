@@ -617,25 +617,15 @@ document.addEventListener('DOMContentLoaded', function() {
 	// als breedte terug. Hieronder alleen voor iPad opgelost, daar is inkorten nooit nodig.
 	if ((screen.width < x) && !(navigator.userAgent.match(/iPad/i) ? true : false)) {
 		document.getElementById('menu-inhoud').innerHTML = '↑';
-		document.getElementById('menu-inhoud').style.paddingLeft = '20px';
+		document.getElementById('menu-inhoud').style.paddingLeft = '15px';
 		document.getElementById('menu-inhoud').style.paddingTop = '0px';
 		document.getElementById('menu-inhoud').style.paddingBottom = '0px';
 		document.getElementById('menu-termen').innerHTML = 't';
 //		document.getElementById('menu-termen').style.fontWeight = 'normal';
 		document.getElementById('menu-index').innerHTML = 'i';
-		document.getElementById('menu-index').style.paddingRight = '22px';
+		document.getElementById('menu-index').style.paddingRight = '15px';
 
-		var stylesheet = document.styleSheets[0];
-		for(var i = 0; i < stylesheet.cssRules.length; i++) {
-			var rule = stylesheet.cssRules[i];
-			if (rule.selectorText == '#menu a') {
-				rule.style.paddingBottom = '10px';
-				rule.style.fontSize = '1.2rem';
-			}
-		}
 	}
-
-	
 });
 </script>
 <script>
